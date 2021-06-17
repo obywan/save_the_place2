@@ -4,3 +4,9 @@ part of 'places_bloc.dart';
 abstract class PlacesEvent {}
 
 class GetPlaces extends PlacesEvent {}
+
+class AddPlace extends PlacesEvent {
+  final Place place;
+
+  AddPlace(this.place);
+}

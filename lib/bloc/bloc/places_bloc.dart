@@ -25,6 +25,19 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
       } catch (e) {
         yield PlacesError(e.toString());
       }
+    } else if (event is AddPlace) {
+      yield PlacesLoading();
+      try {
+        final result = await _placesRepository.addPlace(event.place);
+        if (!result)
+          yield PlacesError('Adding place failed');
+        else {
+          final places = await _placesRepository.getPlaces();
+          yield PlacesLoaded(places);
+        }
+      } catch (e) {
+        yield PlacesError(e.toString());
+      }
     }
   }
 }

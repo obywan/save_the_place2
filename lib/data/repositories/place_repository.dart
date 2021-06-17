@@ -3,6 +3,7 @@ import '../models/place.dart';
 
 abstract class PlacesResitory {
   Future<List<Place>> getPlaces();
+  Future<bool> addPlace(Place p);
 }
 
 class FakePlaceRepository extends PlacesResitory {
@@ -17,5 +18,11 @@ class FakePlaceRepository extends PlacesResitory {
   Future<List<Place>> getPlaces() async {
     await Future.delayed(Duration(seconds: 1));
     return fakePlaces;
+  }
+
+  Future<bool> addPlace(Place p) async {
+    fakePlaces.add(p);
+    await Future.delayed(Duration(seconds: 1));
+    return true;
   }
 }

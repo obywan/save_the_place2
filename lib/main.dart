@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:save_the_place/ui/screens/location_add_screen.dart';
 
 import 'bloc/bloc/places_bloc.dart';
 import 'data/repositories/place_repository.dart';
@@ -22,18 +23,10 @@ class MyApp extends StatelessWidget {
             PlacesBloc(FakePlaceRepository())..add(GetPlaces()),
         child: LocationsListScreen(),
       ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('widget.title'),
-      ),
-      body: Center(),
+      routes: {
+        LocationsListScreen.route: (context) => LocationsListScreen(),
+        LocationAddScreen.route: (context) => LocationAddScreen(),
+      },
     );
   }
 }

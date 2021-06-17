@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:save_the_place/ui/screens/location_add_screen.dart';
 import '../../data/models/place.dart';
 
 import '../../bloc/bloc/places_bloc.dart';
 
 class LocationsListScreen extends StatelessWidget {
+  static const String route = '/location_list_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('List of saved places'),
+      ),
       body: RefreshIndicator(
         onRefresh: () => _refreshList(context),
         child: BlocBuilder<PlacesBloc, PlacesState>(
@@ -22,6 +27,11 @@ class LocationsListScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: new Icon(Icons.add),
+        onPressed: () =>
+            Navigator.of(context).pushNamed(LocationAddScreen.route),
       ),
     );
   }
