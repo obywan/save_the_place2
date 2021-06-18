@@ -13,20 +13,21 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SaveThePlace',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => PlacesBloc(FakePlaceRepository()),
+      child: MaterialApp(
+        title: 'SaveThePlace',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          // textTheme: TextTheme(
+          // ),
+        ),
+        home: LocationsListScreen(),
+        routes: {
+          LocationsListScreen.route: (context) => LocationsListScreen(),
+          LocationAddScreen.route: (context) => LocationAddScreen(),
+        },
       ),
-      home: BlocProvider(
-        create: (context) =>
-            PlacesBloc(FakePlaceRepository())..add(GetPlaces()),
-        child: LocationsListScreen(),
-      ),
-      routes: {
-        LocationsListScreen.route: (context) => LocationsListScreen(),
-        LocationAddScreen.route: (context) => LocationAddScreen(),
-      },
     );
   }
 }

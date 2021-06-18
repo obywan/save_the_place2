@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_bloc: ^7.0.1
   dotted_border: ^2.0.0
+  image_picker: ^0.8.0+3
+  location: ^4.3.0
 
 dev_dependencies:
   flutter_test:

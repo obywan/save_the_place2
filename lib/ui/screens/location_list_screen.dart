@@ -9,6 +9,7 @@ class LocationsListScreen extends StatelessWidget {
   static const String route = '/location_list_screen';
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<PlacesBloc>(context, listen: false).add(GetPlaces());
     return Scaffold(
       appBar: AppBar(
         title: Text('List of saved places'),
@@ -17,7 +18,8 @@ class LocationsListScreen extends StatelessWidget {
         onRefresh: () => _refreshList(context),
         child: BlocBuilder<PlacesBloc, PlacesState>(
           builder: (context, state) {
-            if (state is PlacesLoading) return _getLoading();
+            if (state is PlacesLoading || state is PlacesAdded)
+              return _getLoading();
             if (state is PlacesError) return _getErrorMessage();
             if (state is PlacesLoaded) {
               return _getList(state.places);
