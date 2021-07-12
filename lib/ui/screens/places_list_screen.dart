@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:save_the_place/ui/screens/location_add_screen.dart';
+import 'package:save_the_place/ui/screens/place_details_screen.dart';
+import 'place_add_screen.dart';
 import '../../data/models/place.dart';
 
 import '../../bloc/bloc/places_bloc.dart';
 
 class LocationsListScreen extends StatelessWidget {
-  static const String route = '/location_list_screen';
+  static const String route = '/places_list_screen';
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<PlacesBloc>(context, listen: false).add(GetPlaces());
@@ -22,7 +23,7 @@ class LocationsListScreen extends StatelessWidget {
               return _getLoading();
             if (state is PlacesError) return _getErrorMessage();
             if (state is PlacesLoaded) {
-              return _getList(state.places);
+              return _getList(context, state.places);
             }
             return Center(
               child: Text('Locations list will be here'),
@@ -32,8 +33,7 @@ class LocationsListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: new Icon(Icons.add),
-        onPressed: () =>
-            Navigator.of(context).pushNamed(LocationAddScreen.route),
+        onPressed: () => Navigator.of(context).pushNamed(PlaceAddScreen.route),
       ),
     );
   }
@@ -43,10 +43,12 @@ class LocationsListScreen extends StatelessWidget {
     return Future(() => {});
   }
 
-  Widget _getList(List<Place> places) {
+  Widget _getList(BuildContext context, List<Place> places) {
     return ListView.builder(
       itemBuilder: (ctx, i) => Card(
         child: ListTile(
+          onTap: () => Navigator.of(context)
+              .pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
           title: Text(places[i].name),
         ),
       ),

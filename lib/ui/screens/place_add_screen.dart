@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_place/ui/widgets/new_location_form.dart';
+import '../widgets/new_location_form.dart';
 
-class LocationAddScreen extends StatelessWidget {
-  static const String route = '/location_add_screen';
+class PlaceAddScreen extends StatelessWidget {
+  static const String route = '/place_add_screen';
 
   void _onSuccess(BuildContext context) {
     print('success');

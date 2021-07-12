@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:save_the_place/data/models/place.dart';
-import 'package:save_the_place/data/repositories/place_repository.dart';
+
+import '../../data/models/place.dart';
+import '../../data/repositories/place_repository.dart';
 
 part 'places_event.dart';
 part 'places_state.dart';
