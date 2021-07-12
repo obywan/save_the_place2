@@ -22,6 +22,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
   static const String name = 'name';
   static const String desc = 'desc';
   static const String path = 'path';
+  static const String lat = 'lat';
+  static const String lon = 'lon';
 
   final _formKey = GlobalKey<FormState>();
   Map<String, String> vals = {name: '', desc: '', path: ''};
@@ -72,6 +74,20 @@ class _NewLocationFormState extends State<NewLocationForm> {
                     vals[name] = value != null ? value : 'без назви',
                 validator: FormValidators.notEmpty,
                 decoration: InputDecoration(hintText: 'Place name (required)'),
+              ),
+              SizedBox(height: 8),
+              TextFormField(
+                onSaved: (value) =>
+                    vals[lat] = value != null ? value : 'без назви',
+                validator: FormValidators.notEmpty,
+                decoration: InputDecoration(hintText: 'Latitude (required)'),
+              ),
+              SizedBox(width: 8),
+              TextFormField(
+                onSaved: (value) =>
+                    vals[lon] = value != null ? value : 'без назви',
+                validator: FormValidators.notEmpty,
+                decoration: InputDecoration(hintText: 'Longitude (required)'),
               ),
               SizedBox(height: 8),
               TextFormField(
