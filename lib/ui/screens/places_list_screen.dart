@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:save_the_place/ui/screens/place_details_screen.dart';
-import 'place_add_screen.dart';
-import '../../data/models/place.dart';
 
-import '../../bloc/bloc/places_bloc.dart';
+import '../../bloc/places/places_bloc.dart';
+import '../../data/models/place.dart';
+import 'place_add_screen.dart';
+import 'place_details_screen.dart';
 
 class LocationsListScreen extends StatelessWidget {
   static const String route = '/places_list_screen';
@@ -19,8 +19,7 @@ class LocationsListScreen extends StatelessWidget {
         onRefresh: () => _refreshList(context),
         child: BlocBuilder<PlacesBloc, PlacesState>(
           builder: (context, state) {
-            if (state is PlacesLoading || state is PlacesAdded)
-              return _getLoading();
+            if (state is PlacesLoading || state is PlacesAdded) return _getLoading();
             if (state is PlacesError) return _getErrorMessage();
             if (state is PlacesLoaded) {
               return _getList(context, state.places);
@@ -47,8 +46,7 @@ class LocationsListScreen extends StatelessWidget {
     return ListView.builder(
       itemBuilder: (ctx, i) => Card(
         child: ListTile(
-          onTap: () => Navigator.of(context)
-              .pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
+          onTap: () => Navigator.of(context).pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
           title: Text(places[i].name),
         ),
       ),

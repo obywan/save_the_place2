@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
-import '../../bloc/bloc/places_bloc.dart';
-import '../../data/models/location.dart';
+import '../../bloc/places/places_bloc.dart';
+import '../../data/models/location.dart' as loc;
 import '../../data/models/place.dart';
+import '../../data/repositories/location_repository.dart';
 import '../../helpers/form_validators.dart';
 import 'image_selector.dart';
 
@@ -11,9 +13,7 @@ class NewLocationForm extends StatefulWidget {
   final Function successCallback;
   final Function failCallback;
 
-  const NewLocationForm(
-      {Key? key, required this.successCallback, required this.failCallback})
-      : super(key: key);
+  const NewLocationForm({Key? key, required this.successCallback, required this.failCallback}) : super(key: key);
   @override
   _NewLocationFormState createState() => _NewLocationFormState();
 }
@@ -26,7 +26,9 @@ class _NewLocationFormState extends State<NewLocationForm> {
   static const String lon = 'lon';
 
   final _formKey = GlobalKey<FormState>();
-  Map<String, String> vals = {name: '', desc: '', path: ''};
+  Map<String, dynamic> vals = {name: '', desc: '', path: '', lat: 49.49, lon: 25.25};
+  String? latHintText = 'getting location...';
+  String? lonHintText = 'getting location...';
 
   void _setPath(String p) {
     vals[path] = p;
@@ -35,11 +37,10 @@ class _NewLocationFormState extends State<NewLocationForm> {
   void _submitForm(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
-      debugPrint(vals[path]);
+
       BlocProvider.of<PlacesBloc>(context, listen: false).add(
         AddPlace(
-          Place(Location(49.560, 25.599, 0), vals[name] ?? 'без назви',
-              vals[desc], ''),
+          Place(loc.Location(vals[lat], vals[lon], 0), vals[name] ?? 'без назви', vals[desc], ''),
         ),
       );
     }
@@ -63,59 +64,82 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                onSaved: (value) =>
-                    vals[name] = value != null ? value : 'без назви',
-                validator: FormValidators.notEmpty,
-                decoration: InputDecoration(hintText: 'Place name (required)'),
-              ),
-              SizedBox(height: 8),
-              TextFormField(
-                onSaved: (value) =>
-                    vals[lat] = value != null ? value : 'без назви',
-                validator: FormValidators.notEmpty,
-                decoration: InputDecoration(hintText: 'Latitude (required)'),
-              ),
-              SizedBox(width: 8),
-              TextFormField(
-                onSaved: (value) =>
-                    vals[lon] = value != null ? value : 'без назви',
-                validator: FormValidators.notEmpty,
-                decoration: InputDecoration(hintText: 'Longitude (required)'),
-              ),
-              SizedBox(height: 8),
-              TextFormField(
-                onSaved: (value) => vals[desc] = value != null ? value : '',
-                decoration:
-                    InputDecoration(hintText: 'Place description (optional)'),
-              ),
-              SizedBox(height: 24),
-              ImageSelector(callback: _setPath),
-            ],
-          ),
-        ),
-        SizedBox(height: 24),
-        BlocConsumer<PlacesBloc, PlacesState>(
-          listener: (context, state) {
-            if (state is PlacesAdded) widget.successCallback();
-            if (state is PlacesError) widget.failCallback();
-          },
-          builder: (context, state) {
-            if (state is PlacesLoading)
-              return _loading();
-            else if (state is PlacesInitial || state is PlacesLoaded)
-              return _initial(context);
+    return FutureBuilder<Position>(
+      future: LocationRepository.determinePosition(),
+      builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError)
+            return Center(
+              child: Text('error'),
+            );
+          else
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        onSaved: (value) => vals[name] = value != null ? value : 'без назви',
+                        validator: FormValidators.notEmpty,
+                        decoration: InputDecoration(hintText: 'Place name (required)'),
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              onSaved: (value) => vals[lat] = value != null ? double.tryParse(value) : 0,
+                              validator: FormValidators.notEmpty,
+                              initialValue: snapshot.data!.latitude.toString(),
+                              decoration: InputDecoration(hintText: latHintText),
+                            ),
+                          ),
+                          VerticalDivider(),
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              onSaved: (value) => vals[lon] = value != null ? double.tryParse(value) : 0,
+                              validator: FormValidators.notEmpty,
+                              initialValue: snapshot.data!.longitude.toString(),
+                              decoration: InputDecoration(hintText: lonHintText),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        onSaved: (value) => vals[desc] = value != null ? value : '',
+                        decoration: InputDecoration(hintText: 'Place description (optional)'),
+                      ),
+                      SizedBox(height: 24),
+                      ImageSelector(callback: _setPath),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                BlocConsumer<PlacesBloc, PlacesState>(
+                  listener: (context, state) {
+                    if (state is PlacesAdded) widget.successCallback();
+                    if (state is PlacesError) widget.failCallback();
+                  },
+                  builder: (context, state) {
+                    if (state is PlacesLoading)
+                      return _loading();
+                    else if (state is PlacesInitial || state is PlacesLoaded) return _initial(context);
 
-            return Container();
-          },
-        ),
-      ],
+                    return Container();
+                  },
+                ),
+              ],
+            );
+        } else
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+      },
     );
   }
 }

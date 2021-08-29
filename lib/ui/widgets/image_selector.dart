@@ -44,7 +44,7 @@ class _ImageSelectorState extends State<ImageSelector> {
   }
 
   Future _getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -77,10 +77,7 @@ class _ImageSelectorState extends State<ImageSelector> {
             ),
             Text(
               'Add image',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  ?.copyWith(color: Colors.grey.shade400),
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey.shade400),
             ),
           ],
         ),
