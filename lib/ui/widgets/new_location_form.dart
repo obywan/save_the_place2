@@ -8,6 +8,7 @@ import '../../data/models/place.dart';
 import '../../data/repositories/location_repository.dart';
 import '../../helpers/form_validators.dart';
 import 'image_selector.dart';
+import 'spinny_thing.dart';
 
 class NewLocationForm extends StatefulWidget {
   final Function successCallback;
@@ -40,7 +41,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
       BlocProvider.of<PlacesBloc>(context, listen: false).add(
         AddPlace(
-          Place(loc.Location(vals[lat], vals[lon], 0), vals[name] ?? 'без назви', vals[desc], ''),
+          Place(loc.Location(vals[lat], vals[lon], 0), vals[name], vals[desc], vals[path]),
         ),
       );
     }
@@ -136,9 +137,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
               ],
             );
         } else
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return SpinnyThing();
       },
     );
   }
