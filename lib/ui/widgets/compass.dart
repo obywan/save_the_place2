@@ -1,4 +1,8 @@
+// import 'package:animated_rotation/animated_rotation.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:motion_sensors/motion_sensors.dart';
 
@@ -40,7 +44,12 @@ class _CompassState extends State<Compass> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('${degrees(_absoluteOrientation2.x).toStringAsFixed(4)}'),
+      child: AnimatedRotation(
+        turns: _absoluteOrientation2.x / pi / 2,
+        curve: Curves.ease,
+        duration: Duration(seconds: 1),
+        child: SvgPicture.asset('assets/svg/compass.svg'),
+      ),
     );
   }
 }
