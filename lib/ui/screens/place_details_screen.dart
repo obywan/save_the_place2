@@ -40,7 +40,12 @@ class PlaceDetailsScreen extends StatelessWidget {
                 final Position? currentLocation = snapshot.data;
                 if (currentLocation != null) {
                   final bearing = currentLocation.getBearing(place);
-                  return Text('$bearing');
+                  return Column(
+                    children: [
+                      Text('$bearing'),
+                      Compass(bearing: bearing),
+                    ],
+                  );
                 } else
                   return Text('Waiting for current location...');
               } else {
@@ -48,7 +53,6 @@ class PlaceDetailsScreen extends StatelessWidget {
               }
             },
           ),
-          Compass(bearing: 0)
         ],
       ),
     );

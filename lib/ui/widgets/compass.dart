@@ -1,4 +1,5 @@
 // import 'package:animated_rotation/animated_rotation.dart';
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -22,34 +23,59 @@ class _CompassState extends State<Compass> {
 
   Vector3 _absoluteOrientation2 = Vector3.zero();
 
+  List<StreamSubscription> subscriptions = [];
+
   @override
   void initState() {
     super.initState();
 
-    motionSensors.accelerometer.listen((AccelerometerEvent event) {
+    subscriptions.add(motionSensors.accelerometer.listen((AccelerometerEvent event) {
       setState(() {
         _accelerometer.setValues(event.x, event.y, event.z);
       });
-    });
+    }));
 
-    motionSensors.magnetometer.listen((MagnetometerEvent event) {
+    subscriptions.add(motionSensors.magnetometer.listen((MagnetometerEvent event) {
       setState(() {
         _magnetometer.setValues(event.x, event.y, event.z);
         var matrix = motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
         _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
       });
-    });
+    }));
+  }
+
+  @override
+  void dispose() {
+    debugPrint('${subscriptions.length}');
+    for (StreamSubscription s in subscriptions) s.cancel();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedRotation(
-        turns: _absoluteOrientation2.x / pi / 2,
-        curve: Curves.ease,
-        duration: Duration(seconds: 1),
-        child: SvgPicture.asset('assets/svg/compass.svg'),
-      ),
+    final north = _absoluteOrientation2.x / pi / 2;
+    final target = (_absoluteOrientation2.x + widget.bearing) / pi / 2;
+    // debugPrint('$north #### $target');
+    return Stack(
+      children: [
+        Center(
+          child: AnimatedRotation(
+            turns: north,
+            curve: Curves.ease,
+            duration: Duration(seconds: 1),
+            child: SvgPicture.asset('assets/svg/compass.svg'),
+          ),
+        ),
+        Center(
+          child: AnimatedRotation(
+            turns: target,
+            curve: Curves.ease,
+            duration: Duration(seconds: 1),
+            child: SvgPicture.asset('assets/svg/arrow.svg'),
+          ),
+        ),
+      ],
     );
   }
 }
