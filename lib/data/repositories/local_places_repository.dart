@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:save_the_place/helpers/local_storage_helper.dart';
-
+import '../../helpers/local_storage_helper.dart';
 import '../models/place.dart';
 import 'place_repository.dart';
 
@@ -33,7 +31,7 @@ class LocalPlacesRepository extends PlacesResitory {
       if (stringData.isNotEmpty) {
         places = List<Place>.from((jsonDecode(stringData) as Iterable).map((e) => Place.fromJSON(e))).toList();
       }
-    } on Exception catch (e) {
+    } on Exception {
       // nothing
     }
     _initialLoadIsDone = true;
