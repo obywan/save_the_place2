@@ -9,4 +9,10 @@ class Location {
       : latitude = json['latitude'],
         longitude = json['longitude'],
         elevation = json['elevation'];
+
+  Map<String, dynamic> toJson() => {
+        'latitude': latitude,
+        'longitude': longitude,
+        'elevation': elevation,
+      };
 }

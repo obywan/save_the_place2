@@ -9,8 +9,15 @@ class Place {
   Place(this.location, this.name, this.description, this.imagePath);
 
   Place.fromJSON(Map<String, dynamic> json)
-      : location = json['location'],
+      : location = Location.fromJSON(json['location']),
         name = json['name'],
         description = json['description'],
         imagePath = json['imagePath'];
+
+  Map<String, dynamic> toJson() => {
+        'location': location,
+        'name': name,
+        'description': description,
+        'imagePath': imagePath,
+      };
 }

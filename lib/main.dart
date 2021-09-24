@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/places/places_bloc.dart';
-import 'data/repositories/place_repository.dart';
+import 'data/repositories/local_places_repository.dart';
 import 'ui/screens/place_add_screen.dart';
 import 'ui/screens/place_details_screen.dart';
 import 'ui/screens/places_list_screen.dart';
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PlacesBloc>(create: (context) => PlacesBloc(FakePlaceRepository())),
+        BlocProvider<PlacesBloc>(create: (context) => PlacesBloc(LocalPlacesRepository())),
       ],
       child: MaterialApp(
         title: 'SaveThePlace',
