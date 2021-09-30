@@ -1,4 +1,3 @@
-// import 'package:animated_rotation/animated_rotation.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:motion_sensors/motion_sensors.dart';
+// import 'package:animated_rotation/animated_rotation.dart' as animR;
 
 class Compass extends StatefulWidget {
   final double bearing;
@@ -54,28 +54,34 @@ class _CompassState extends State<Compass> {
 
   @override
   Widget build(BuildContext context) {
-    final north = _absoluteOrientation2.x / pi / 2;
-    final target = (_absoluteOrientation2.x + widget.bearing) / pi / 2;
-    // debugPrint('$north #### $target');
+    final north = _absoluteOrientation2.x;
+    final target = north + widget.bearing / (180 / pi);
+    debugPrint('${north / pi / 2} | ${target / pi / 2}');
     return Stack(
       children: [
         Center(
-          child: AnimatedRotation(
-            turns: north,
-            curve: Curves.ease,
-            duration: Duration(seconds: 1),
-            child: SvgPicture.asset('assets/svg/compass.svg'),
-          ),
+          child: getAnimatedWidget(north / pi / 2, 'assets/svg/compass.svg'),
         ),
         Center(
-          child: AnimatedRotation(
-            turns: target,
-            curve: Curves.ease,
-            duration: Duration(seconds: 1),
-            child: SvgPicture.asset('assets/svg/arrow.svg'),
-          ),
+          child: getAnimatedWidget(target / pi / 2, 'assets/svg/arrow.svg'),
         ),
       ],
+    );
+  }
+
+  AnimatedRotation getAnimatedWidget(double angle, String image) {
+    return AnimatedRotation(
+      turns: angle,
+      curve: Curves.ease,
+      duration: Duration(milliseconds: 500),
+      child: SvgPicture.asset(image),
+    );
+  }
+
+  Widget getPlainWidget(double angle, String image) {
+    return Transform.rotate(
+      angle: angle,
+      child: SvgPicture.asset(image),
     );
   }
 }

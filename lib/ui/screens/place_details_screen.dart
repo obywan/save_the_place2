@@ -27,7 +27,7 @@ class PlaceDetailsScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-          SizedBox(height: 24),
+          SizedBox(height: 16),
           if (description != null)
             Text(
               description,
@@ -42,7 +42,8 @@ class PlaceDetailsScreen extends StatelessWidget {
                   final bearing = currentLocation.getBearing(place);
                   return Column(
                     children: [
-                      Text('$bearing'),
+                      Text('Coords: ${place.location.latitude}, ${place.location.longitude}'),
+                      Text('Bearing: ${bearing.round()}'),
                       Compass(bearing: bearing),
                     ],
                   );
