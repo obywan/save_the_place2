@@ -129,7 +129,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                   builder: (context, state) {
                     if (state is PlacesLoading)
                       return _loading();
-                    else if (state is PlacesInitial || state is PlacesLoaded) return _initial(context);
+                    else if (state is PlacesInitial || state is PlacesLoaded || state is PlacesError) return _initial(context);
 
                     return Container();
                   },
