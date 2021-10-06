@@ -24,6 +24,8 @@ class _CompassState extends State<Compass> {
   Vector3 _absoluteOrientation2 = Vector3.zero();
 
   List<StreamSubscription> subscriptions = [];
+  double oldXRotation = 0;
+  double northRotation = 0;
 
   @override
   void initState() {
@@ -40,6 +42,18 @@ class _CompassState extends State<Compass> {
         _magnetometer.setValues(event.x, event.y, event.z);
         var matrix = motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
         _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
+
+        final preprocessedRotation = _absoluteOrientation2.x > 0 ? _absoluteOrientation2.x : 6.28 + _absoluteOrientation2.x;
+        final lineCrossed = (oldXRotation - preprocessedRotation).abs() > 6;
+
+        if (!lineCrossed)
+          northRotation += preprocessedRotation - oldXRotation;
+        else if (_absoluteOrientation2.x < 0)
+          northRotation += oldXRotation + 6.28 - preprocessedRotation;
+        else
+          northRotation += preprocessedRotation + 6.28 - oldXRotation;
+
+        oldXRotation = preprocessedRotation;
       });
     }));
   }
@@ -54,9 +68,9 @@ class _CompassState extends State<Compass> {
 
   @override
   Widget build(BuildContext context) {
-    final north = _absoluteOrientation2.x;
+    final north = northRotation;
     final target = north + widget.bearing / (180 / pi);
-    debugPrint('${north / pi / 2} | ${target / pi / 2}');
+    // debugPrint('$north');
     return Stack(
       children: [
         Center(
@@ -69,11 +83,11 @@ class _CompassState extends State<Compass> {
     );
   }
 
-  AnimatedRotation getAnimatedWidget(double angle, String image) {
+  AnimatedRotation getAnimatedWidget(double turns, String image) {
     return AnimatedRotation(
-      turns: angle,
+      turns: turns,
       curve: Curves.ease,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 300),
       child: SvgPicture.asset(image),
     );
   }

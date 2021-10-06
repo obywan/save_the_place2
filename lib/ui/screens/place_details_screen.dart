@@ -40,10 +40,13 @@ class PlaceDetailsScreen extends StatelessWidget {
                 final Position? currentLocation = snapshot.data;
                 if (currentLocation != null) {
                   final bearing = currentLocation.getBearing(place);
+                  final distance =
+                      Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
                   return Column(
                     children: [
                       Text('Coords: ${place.location.latitude}, ${place.location.longitude}'),
                       Text('Bearing: ${bearing.round()}'),
+                      Text('Distance: ${distance.toInt()} m'),
                       Compass(bearing: bearing),
                     ],
                   );
