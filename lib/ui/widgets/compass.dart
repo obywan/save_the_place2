@@ -24,7 +24,7 @@ class _CompassState extends State<Compass> {
   Vector3 _absoluteOrientation2 = Vector3.zero();
 
   List<StreamSubscription> subscriptions = [];
-  double oldXRotation = 0;
+  double oldXRotation = -10000;
   double northRotation = 0;
 
   @override
@@ -44,23 +44,27 @@ class _CompassState extends State<Compass> {
         _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
 
         final preprocessedRotation = _absoluteOrientation2.x > 0 ? _absoluteOrientation2.x : 6.28 + _absoluteOrientation2.x;
-        final lineCrossed = (oldXRotation - preprocessedRotation).abs() > 6;
 
-        if (!lineCrossed)
-          northRotation += preprocessedRotation - oldXRotation;
-        else if (_absoluteOrientation2.x < 0)
-          northRotation += oldXRotation + 6.28 - preprocessedRotation;
-        else
-          northRotation += preprocessedRotation + 6.28 - oldXRotation;
+        if (oldXRotation < -1000) oldXRotation = preprocessedRotation;
+        // final radianRotations = (oldXRotation ~/ 6.28) * 6.28;
+        final plusOneDelta = (oldXRotation - (preprocessedRotation + 6.28)).abs();
+        final minusOneDelta = (oldXRotation - (preprocessedRotation - 6.28)).abs();
+        final noChangeDelta = (oldXRotation - preprocessedRotation).abs();
 
-        oldXRotation = preprocessedRotation;
+        // debugPrint('$oldXRotation $preprocessedRotation $plusOneDelta $minusOneDelta $noChangeDelta');
+
+        if (plusOneDelta < minusOneDelta && plusOneDelta < noChangeDelta) northRotation = preprocessedRotation + 6.28;
+        if (minusOneDelta < plusOneDelta && minusOneDelta < noChangeDelta) northRotation = preprocessedRotation - 6.28;
+        if (noChangeDelta < minusOneDelta && noChangeDelta < plusOneDelta) northRotation = preprocessedRotation;
+
+        oldXRotation = northRotation;
       });
     }));
   }
 
   @override
   void dispose() {
-    debugPrint('${subscriptions.length}');
+    // debugPrint('${subscriptions.length}');
     for (StreamSubscription s in subscriptions) s.cancel();
 
     super.dispose();
@@ -68,6 +72,8 @@ class _CompassState extends State<Compass> {
 
   @override
   Widget build(BuildContext context) {
+    // debugPrint('$oldXRotation $northRotation');
+
     final north = northRotation;
     final target = north + widget.bearing / (180 / pi);
     // debugPrint('$north');
@@ -87,7 +93,7 @@ class _CompassState extends State<Compass> {
     return AnimatedRotation(
       turns: turns,
       curve: Curves.ease,
-      duration: Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 500),
       child: SvgPicture.asset(image),
     );
   }
