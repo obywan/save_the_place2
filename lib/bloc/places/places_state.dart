@@ -9,6 +9,8 @@ class PlacesInitial extends PlacesState {}
 
 class PlacesAdded extends PlacesState {}
 
+class PlacesRemoved extends PlacesState {}
+
 class PlacesLoaded extends PlacesState {
   final List<Place> places;
 

@@ -45,9 +45,14 @@ class LocationsListScreen extends StatelessWidget {
   Widget _getList(BuildContext context, List<Place> places) {
     return ListView.builder(
       itemBuilder: (ctx, i) => Card(
-        child: ListTile(
-          onTap: () => Navigator.of(context).pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
-          title: Text(places[i].name),
+        child: Dismissible(
+          background: Container(color: Colors.red),
+          key: ValueKey(places[i].location.latitude + places[i].location.longitude),
+          child: ListTile(
+            onTap: () => Navigator.of(context).pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
+            title: Text(places[i].name),
+          ),
+          onDismissed: (dir) => BlocProvider.of<PlacesBloc>(context, listen: false).add(RemovePlace(places[i])),
         ),
       ),
       itemCount: places.length,

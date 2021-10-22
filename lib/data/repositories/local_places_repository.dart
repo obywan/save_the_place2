@@ -18,6 +18,14 @@ class LocalPlacesRepository extends PlacesResitory {
   }
 
   @override
+  Future<bool> removePlace(Place p) async {
+    places.remove(p);
+    final placesJson = json.encode(places);
+    await LocalStorageHelper.saveToFile(filename, placesJson);
+    return true;
+  }
+
+  @override
   Future<List<Place>> getPlaces() async {
     if (!_initialLoadIsDone) {
       await _initLoad();

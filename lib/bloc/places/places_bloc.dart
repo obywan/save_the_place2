@@ -20,7 +20,9 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
   ) async* {
     if (event is GetPlaces)
       yield* _onGetPlaces(event);
-    else if (event is AddPlace) yield* _onAddPlace(event);
+    else if (event is AddPlace)
+      yield* _onAddPlace(event);
+    else if (event is RemovePlace) yield* _onRemovePlace(event);
   }
 
   Stream<PlacesState> _onGetPlaces(PlacesEvent event) async* {
@@ -36,12 +38,27 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
   Stream<PlacesState> _onAddPlace(PlacesEvent event) async* {
     yield PlacesLoading();
     try {
-      final result =
-          await _placesRepository.addPlace((event as AddPlace).place);
+      final result = await _placesRepository.addPlace((event as AddPlace).place);
       if (!result)
         yield PlacesError('Adding place failed');
       else {
         yield PlacesAdded();
+        final places = await _placesRepository.getPlaces();
+        yield PlacesLoaded(places);
+      }
+    } catch (e) {
+      yield PlacesError(e.toString());
+    }
+  }
+
+  Stream<PlacesState> _onRemovePlace(PlacesEvent event) async* {
+    yield PlacesLoading();
+    try {
+      final result = await _placesRepository.removePlace((event as RemovePlace).place);
+      if (!result)
+        yield PlacesError('Removing place failed');
+      else {
+        yield PlacesRemoved();
         final places = await _placesRepository.getPlaces();
         yield PlacesLoaded(places);
       }

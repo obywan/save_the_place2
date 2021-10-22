@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:save_the_place/data/models/place.dart';
-import 'package:save_the_place/ui/widgets/compass.dart';
-import 'package:save_the_place/ui/widgets/spinny_thing.dart';
+
+import '../../data/models/place.dart';
 import '../../helpers/extension_methods.dart';
+import '../widgets/compass.dart';
+import '../widgets/spinny_thing.dart';
 
 class PlaceDetailsScreen extends StatelessWidget {
   static const String route = '/place_details_screen';
@@ -16,49 +19,114 @@ class PlaceDetailsScreen extends StatelessWidget {
     final description = place.description;
     return Scaffold(
       appBar: AppBar(title: Text(place.name)),
-      body: Column(
+      body: SafeArea(
+        child: Column(
+          children: [
+            StreamBuilder<Position>(
+              stream: positionStream,
+              builder: (ctx, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  final Position? currentLocation = snapshot.data;
+                  if (currentLocation != null) {
+                    final bearing = currentLocation.getBearing(place);
+                    final distance =
+                        Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DetailsTextRow(
+                              text: Text('Destination: ${place.location.latitude.toStringAsFixed(4)}, ${place.location.longitude.toStringAsFixed(4)}'),
+                              color: Colors.amber,
+                            ),
+                            DetailsTextRow(
+                              text: Text('Bearing: ${bearing.round()}'),
+                              color: Colors.green,
+                            ),
+                            DetailsTextRow(
+                              text: Text('Distance: ${distance.toInt()} m'),
+                              color: Colors.pink,
+                            ),
+                          ],
+                        ),
+                        Compass(bearing: bearing),
+                      ],
+                    );
+                  } else
+                    return Text('Waiting for current location...');
+                } else {
+                  return SpinnyThing();
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Expanded _getImage(String? imagePath, String? description, BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Stack(
         children: [
-          if (imagePath != null && imagePath.isNotEmpty)
+          Container(
+            // height: 200,
+            width: double.infinity,
+            child: (imagePath != null && imagePath.isNotEmpty)
+                ? Image.file(
+                    File(imagePath),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+          ),
+          if (description != null && description.isNotEmpty)
             Container(
-              height: 200,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.transparent, Colors.black87],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
+              // height: 200,
               width: double.infinity,
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white70),
+                ),
               ),
             ),
-          SizedBox(height: 16),
-          if (description != null)
-            Text(
-              description,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          StreamBuilder<Position>(
-            stream: positionStream,
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                final Position? currentLocation = snapshot.data;
-                if (currentLocation != null) {
-                  final bearing = currentLocation.getBearing(place);
-                  final distance =
-                      Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
-                  return Column(
-                    children: [
-                      Text('Coords: ${place.location.latitude}, ${place.location.longitude}'),
-                      Text('Bearing: ${bearing.round()}'),
-                      Text('Distance: ${distance.toInt()} m'),
-                      Compass(bearing: bearing),
-                    ],
-                  );
-                } else
-                  return Text('Waiting for current location...');
-              } else {
-                return SpinnyThing();
-              }
-            },
-          ),
         ],
       ),
+    );
+  }
+}
+
+class DetailsTextRow extends StatelessWidget {
+  const DetailsTextRow({
+    Key? key,
+    required this.text,
+    this.color = Colors.grey,
+  }) : super(key: key);
+
+  final Text text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.centerLeft,
+      height: 64,
+      width: double.infinity,
+      decoration: BoxDecoration(color: color),
+      child: text,
     );
   }
 }

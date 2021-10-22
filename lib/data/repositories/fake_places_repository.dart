@@ -9,13 +9,22 @@ class FakePlacesRepository extends PlacesResitory {
     Place(Location(49.560, 25.599, 0), '6 магазин', 'Шостий магазин на Бродівській', ''),
   ];
 
+  @override
   Future<List<Place>> getPlaces() async {
     await Future.delayed(Duration(seconds: 1));
     return fakePlaces;
   }
 
+  @override
   Future<bool> addPlace(Place p) async {
     fakePlaces.add(p);
+    await Future.delayed(Duration(seconds: 1));
+    return true;
+  }
+
+  @override
+  Future<bool> removePlace(Place p) async {
+    fakePlaces.remove(p);
     await Future.delayed(Duration(seconds: 1));
     return true;
   }

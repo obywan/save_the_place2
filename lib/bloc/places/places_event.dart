@@ -10,3 +10,9 @@ class AddPlace extends PlacesEvent {
 
   AddPlace(this.place);
 }
+
+class RemovePlace extends PlacesEvent {
+  final Place place;
+
+  RemovePlace(this.place);
+}
