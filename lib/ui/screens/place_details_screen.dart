@@ -20,55 +20,56 @@ class PlaceDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(place.name)),
       body: SafeArea(
-        child: Column(
-          children: [
-            StreamBuilder<Position>(
-              stream: positionStream,
-              builder: (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.active) {
-                  final Position? currentLocation = snapshot.data;
-                  if (currentLocation != null) {
-                    final bearing = currentLocation.getBearing(place);
-                    final distance =
-                        Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+        child: StreamBuilder<Position>(
+          stream: positionStream,
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              final Position? currentLocation = snapshot.data;
+              if (currentLocation != null) {
+                final bearing = currentLocation.getBearing(place);
+                final distance =
+                    Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (place.description.isNotEmpty)
                             DetailsTextRow(
-                              text: Text('Destination: ${place.location.latitude.toStringAsFixed(4)}, ${place.location.longitude.toStringAsFixed(4)}'),
-                              color: Colors.amber,
+                              text: Text(place.description),
+                              color: Colors.grey.shade300,
                             ),
-                            DetailsTextRow(
-                              text: Text('Bearing: ${bearing.round()}'),
-                              color: Colors.green,
-                            ),
-                            DetailsTextRow(
-                              text: Text('Distance: ${distance.toInt()} m'),
-                              color: Colors.pink,
-                            ),
-                          ],
-                        ),
-                        Compass(bearing: bearing),
-                      ],
-                    );
-                  } else
-                    return Text('Waiting for current location...');
-                } else {
-                  return SpinnyThing();
-                }
-              },
-            ),
-          ],
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Expanded(
+                      flex: 10,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text('Distance: ${distance.getReadableDistance()}'),
+                          Compass(bearing: bearing),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              } else
+                return Text('Waiting for current location...');
+            } else {
+              return SpinnyThing();
+            }
+          },
         ),
       ),
     );
   }
 
-  Expanded _getImage(String? imagePath, String? description, BuildContext context) {
+  Expanded _getImage(String imagePath, String description, BuildContext context) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -76,14 +77,14 @@ class PlaceDetailsScreen extends StatelessWidget {
           Container(
             // height: 200,
             width: double.infinity,
-            child: (imagePath != null && imagePath.isNotEmpty)
+            child: (imagePath.isNotEmpty)
                 ? Image.file(
                     File(imagePath),
                     fit: BoxFit.cover,
                   )
                 : null,
           ),
-          if (description != null && description.isNotEmpty)
+          if (description.isNotEmpty)
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -120,13 +121,14 @@ class DetailsTextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      alignment: Alignment.centerLeft,
-      height: 64,
-      width: double.infinity,
-      decoration: BoxDecoration(color: color),
-      child: text,
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.centerLeft,
+        width: double.infinity,
+        decoration: BoxDecoration(color: color),
+        child: text,
+      ),
     );
   }
 }

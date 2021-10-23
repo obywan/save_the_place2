@@ -3,8 +3,8 @@ import 'location.dart';
 class Place {
   final Location location;
   final String name;
-  final String? description;
-  final String? imagePath;
+  final String description;
+  final String imagePath;
 
   Place(this.location, this.name, this.description, this.imagePath);
 
