@@ -1,13 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../data/models/place.dart';
-import '../../helpers/extension_methods.dart';
-import '../widgets/compass.dart';
 import '../widgets/details_text_row.dart';
-import '../widgets/spinny_thing.dart';
 
 class PlaceDetailsScreen extends StatelessWidget {
   static const String route = '/place_details_screen';

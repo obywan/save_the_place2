@@ -31,8 +31,8 @@ class _ImageSelectorState extends State<ImageSelector> {
 
   Widget _imagePreview() {
     return Container(
-      height: 150,
-      width: double.infinity,
+      height: 64,
+      width: 96,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Image.file(
@@ -63,8 +63,8 @@ class _ImageSelectorState extends State<ImageSelector> {
       radius: Radius.circular(15),
       color: Colors.grey.shade400,
       child: Container(
-        height: 150,
-        width: double.infinity,
+        height: 64,
+        width: 96,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
         ),

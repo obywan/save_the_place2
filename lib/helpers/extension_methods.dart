@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../data/models/place.dart';
@@ -14,5 +15,12 @@ extension Distance on double {
       return '${this ~/ 1000}km ${(this % 1000).toInt()}m';
     } else
       return '${this.toInt()}m';
+  }
+}
+
+extension TextEditingControllerExt on TextEditingController {
+  void selectAll() {
+    if (text.isEmpty) return;
+    selection = TextSelection(baseOffset: 0, extentOffset: text.length);
   }
 }
