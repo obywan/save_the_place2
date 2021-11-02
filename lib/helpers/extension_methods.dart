@@ -13,6 +13,6 @@ extension Distance on double {
     if (this > 1000) {
       return '${this ~/ 1000}km ${(this % 1000).toInt()}m';
     } else
-      return '${this}m';
+      return '${this.toInt()}m';
   }
 }

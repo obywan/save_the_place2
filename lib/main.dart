@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/places/places_bloc.dart';
 import 'data/repositories/local_places_repository.dart';
-import 'ui/screens/place_add_screen.dart';
-import 'ui/screens/place_details_screen.dart';
+import 'helpers/routes.dart';
 import 'ui/screens/places_list_screen.dart';
 
 void main() {
@@ -24,11 +23,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: LocationsListScreen(),
-        routes: {
-          LocationsListScreen.route: (context) => LocationsListScreen(),
-          PlaceAddScreen.route: (context) => PlaceAddScreen(),
-          PlaceDetailsScreen.route: (context) => PlaceDetailsScreen(),
-        },
+        routes: Routes.routesTable,
       ),
     );
   }

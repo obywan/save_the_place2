@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:save_the_place/bloc/places/places_bloc.dart';
-import 'package:save_the_place/data/models/place.dart';
-import 'package:save_the_place/ui/screens/place_details_screen.dart';
+
+import '../../bloc/places/places_bloc.dart';
+import '../../data/models/place.dart';
+import '../screens/place_direction_screen.dart';
 
 class PlacesList extends StatelessWidget {
   const PlacesList({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class PlacesList extends StatelessWidget {
           ),
           key: ValueKey(places[i].location.latitude + places[i].location.longitude),
           child: ListTile(
-            onTap: () => Navigator.of(context).pushNamed(PlaceDetailsScreen.route, arguments: places[i]),
+            onTap: () => Navigator.of(context).pushNamed(PlaceDirectionScreen.route, arguments: places[i]),
             title: Text(places[i].name),
           ),
           onDismissed: (dir) => BlocProvider.of<PlacesBloc>(context, listen: false).add(RemovePlace(places[i])),
