@@ -38,8 +38,8 @@ class PlaceDirectionScreen extends StatelessWidget {
                     if (place.description.isNotEmpty)
                       Expanded(
                         child: DetailsTextRow(
-                          text: Text(place.description),
-                          color: Colors.grey.shade300,
+                          child: Text(place.description),
+                          color: Colors.green.shade100,
                         ),
                       ),
                     SizedBox(height: 16),

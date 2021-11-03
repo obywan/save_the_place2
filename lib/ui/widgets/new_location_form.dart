@@ -32,8 +32,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
   final TextEditingController textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> vals = {name: '', desc: '', path: '', lat: 49.49, lon: 25.25, alt: 350.0};
-  String? latHintText = 'latitude is required';
-  String? lonHintText = 'longitude is required';
+  String? latHintText = 'Latitude (required)';
+  String? lonHintText = 'Longitude (required)';
 
   void _setPath(String p) {
     vals[path] = p;
@@ -90,7 +90,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       onSaved: (value) => vals[name] = value != null ? value : 'без назви',
                       validator: FormValidators.notEmpty,
                       // initialValue: ,
-                      decoration: InputDecoration(hintText: 'Name of the place', labelText: 'Name (required)'),
+                      decoration: InputDecoration(hintText: 'Name of the place (required)', labelText: 'Name'),
                       controller: textEditingController,
                       onTap: () => textEditingController.selectAll(),
                     ),
@@ -100,7 +100,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       onSaved: (value) => vals[lat] = value != null ? double.tryParse(value) : 0,
                       validator: FormValidators.notEmpty,
                       initialValue: snapshot.data!.latitude.toStringAsFixed(5),
-                      decoration: InputDecoration(hintText: latHintText, labelText: 'Latitude (required)'),
+                      decoration: InputDecoration(hintText: latHintText, labelText: 'Latitude'),
                     ),
                     VerticalDivider(),
                     TextFormField(
@@ -108,7 +108,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       onSaved: (value) => vals[lon] = value != null ? double.tryParse(value) : 0,
                       validator: FormValidators.notEmpty,
                       initialValue: snapshot.data!.longitude.toStringAsFixed(5),
-                      decoration: InputDecoration(hintText: lonHintText, labelText: 'Longitude (required)'),
+                      decoration: InputDecoration(hintText: lonHintText, labelText: 'Longitude'),
                     ),
                     TextFormField(
                       keyboardType: TextInputType.number,

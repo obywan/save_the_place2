@@ -12,29 +12,42 @@ class PlaceDetailsScreen extends StatelessWidget {
     final Place place = ModalRoute.of(context)!.settings.arguments as Place;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Details of ${place.name}')),
+      appBar: AppBar(title: Text(place.name)),
       body: SafeArea(
         child: Column(
           children: [
             DetailsTextRow(
-              text: Text('Name: ${place.name}'),
-              color: Colors.green.shade400,
-            ),
-            DetailsTextRow(
-              text: Text('Description: ${place.description}'),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.description_outlined),
+                  SizedBox(width: 8),
+                  Text(place.description),
+                ],
+              ),
               color: Colors.green.shade300,
             ),
             DetailsTextRow(
-              text: Text('Latitude: ${place.location.latitude}'),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.location_on_outlined),
+                  SizedBox(width: 8),
+                  Text('${place.location.latitude}, ${place.location.longitude}'),
+                ],
+              ),
               color: Colors.green.shade200,
             ),
             DetailsTextRow(
-              text: Text('Longitude: ${place.location.longitude}'),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.height),
+                  SizedBox(width: 8),
+                  Text('${place.location.elevation} m'),
+                ],
+              ),
               color: Colors.green.shade100,
-            ),
-            DetailsTextRow(
-              text: Text('Elevation: ${place.location.elevation}'),
-              color: Colors.green.shade50,
             ),
             _getImage(place.imagePath, context)
           ],

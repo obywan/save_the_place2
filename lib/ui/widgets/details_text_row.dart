@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class DetailsTextRow extends StatelessWidget {
   const DetailsTextRow({
     Key? key,
-    required this.text,
+    required this.child,
     this.color = Colors.grey,
   }) : super(key: key);
 
-  final Text text;
+  final Widget child;
   final Color color;
 
   @override
@@ -17,7 +17,7 @@ class DetailsTextRow extends StatelessWidget {
       alignment: Alignment.centerLeft,
       width: double.infinity,
       decoration: BoxDecoration(color: color),
-      child: text,
+      child: child,
     );
   }
 }
