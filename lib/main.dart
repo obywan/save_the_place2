@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'bloc/places/places_bloc.dart';
 import 'data/repositories/local_places_repository.dart';
 import 'helpers/routes.dart';
+import 'localization/localizations.dart';
 import 'ui/screens/places_list_screen.dart';
 
 void main() {
@@ -24,6 +27,12 @@ class MyApp extends StatelessWidget {
         ),
         home: LocationsListScreen(),
         routes: Routes.routesTable,
+        localizationsDelegates: [
+          CustomLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: CustomLocalizations.supportedLocales,
       ),
     );
   }
