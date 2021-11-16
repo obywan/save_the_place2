@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:save_the_place/localization/localizations.dart';
 import '../../helpers/extension_methods.dart';
 
 import '../../bloc/places/places_bloc.dart';
@@ -32,8 +33,6 @@ class _NewLocationFormState extends State<NewLocationForm> {
   final TextEditingController textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> vals = {name: '', desc: '', path: '', lat: 49.49, lon: 25.25, alt: 350.0};
-  String? latHintText = 'Latitude (required)';
-  String? lonHintText = 'Longitude (required)';
 
   void _setPath(String p) {
     vals[path] = p;
@@ -69,13 +68,14 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
   @override
   Widget build(BuildContext context) {
+    final translations = CustomLocalizations.of(context);
     return FutureBuilder<Position>(
       future: LocationRepository.determinePosition(),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError)
             return Center(
-              child: Text('error'),
+              child: Text(translations.messages.errorMessage),
             );
           else
             textEditingController.text = DateFormat('HH:mm, MMMM dd yyyy').format(DateTime.now());
@@ -87,10 +87,11 @@ class _NewLocationFormState extends State<NewLocationForm> {
                 child: Column(
                   children: [
                     TextFormField(
-                      onSaved: (value) => vals[name] = value != null ? value : 'без назви',
+                      onSaved: (value) => vals[name] = value != null ? value : 'noname',
                       validator: FormValidators.notEmpty,
                       // initialValue: ,
-                      decoration: InputDecoration(hintText: 'Name of the place (required)', labelText: 'Name'),
+                      decoration: InputDecoration(
+                          hintText: '${translations.newPlaceForm.name} ${translations.newPlaceForm.required}', labelText: translations.newPlaceForm.name),
                       controller: textEditingController,
                       onTap: () => textEditingController.selectAll(),
                     ),
@@ -100,7 +101,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       onSaved: (value) => vals[lat] = value != null ? double.tryParse(value) : 0,
                       validator: FormValidators.notEmpty,
                       initialValue: snapshot.data!.latitude.toStringAsFixed(5),
-                      decoration: InputDecoration(hintText: latHintText, labelText: 'Latitude'),
+                      decoration: InputDecoration(
+                          hintText: '${translations.newPlaceForm.lat} ${translations.newPlaceForm.required}', labelText: translations.newPlaceForm.lat),
                     ),
                     VerticalDivider(),
                     TextFormField(
@@ -108,19 +110,20 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       onSaved: (value) => vals[lon] = value != null ? double.tryParse(value) : 0,
                       validator: FormValidators.notEmpty,
                       initialValue: snapshot.data!.longitude.toStringAsFixed(5),
-                      decoration: InputDecoration(hintText: lonHintText, labelText: 'Longitude'),
+                      decoration: InputDecoration(
+                          hintText: '${translations.newPlaceForm.lon} ${translations.newPlaceForm.required}', labelText: translations.newPlaceForm.lon),
                     ),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       onSaved: (value) => vals[alt] = value != null ? double.tryParse(value) : 0,
                       validator: FormValidators.notEmpty,
                       initialValue: snapshot.data!.altitude.toStringAsFixed(1),
-                      decoration: InputDecoration(hintText: lonHintText, labelText: 'Elevation'),
+                      decoration: InputDecoration(hintText: translations.newPlaceForm.elev, labelText: translations.newPlaceForm.elev),
                     ),
                     SizedBox(height: 8),
                     TextFormField(
                       onSaved: (value) => vals[desc] = value != null ? value : '',
-                      decoration: InputDecoration(hintText: 'Place description (optional)'),
+                      decoration: InputDecoration(hintText: translations.newPlaceForm.description),
                     ),
                     SizedBox(height: 24),
                     ImageSelector(callback: _setPath),

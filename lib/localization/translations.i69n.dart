@@ -39,6 +39,7 @@ class Translations implements i69n.I69nMessageBundle {
   MessagesTranslations get messages => MessagesTranslations(this);
   DialogsTranslations get dialogs => DialogsTranslations(this);
   GeneralTranslations get general => GeneralTranslations(this);
+  NewPlaceFormTranslations get newPlaceForm => NewPlaceFormTranslations(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -54,6 +55,8 @@ class Translations implements i69n.I69nMessageBundle {
         return dialogs;
       case 'general':
         return general;
+      case 'newPlaceForm':
+        return newPlaceForm;
       default:
         return key;
     }
@@ -140,6 +143,7 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
   String get waitingForLocation => "Waiting for current location...";
   String get currentLocation => "current location";
   String get addImage => "Add image";
+  String get save => "Save";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -157,6 +161,42 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
         return currentLocation;
       case 'addImage':
         return addImage;
+      case 'save':
+        return save;
+      default:
+        return key;
+    }
+  }
+}
+
+class NewPlaceFormTranslations implements i69n.I69nMessageBundle {
+  final Translations _parent;
+  const NewPlaceFormTranslations(this._parent);
+  String get lat => "Latitude";
+  String get lon => "Longitude";
+  String get elev => "Elevation";
+  String get name => "Name";
+  String get description => "Description";
+  String get required => "(required)";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'lat':
+        return lat;
+      case 'lon':
+        return lon;
+      case 'elev':
+        return elev;
+      case 'name':
+        return name;
+      case 'description':
+        return description;
+      case 'required':
+        return required;
       default:
         return key;
     }

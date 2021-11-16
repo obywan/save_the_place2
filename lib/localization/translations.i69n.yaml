@@ -15,3 +15,11 @@ general:
   waitingForLocation: Waiting for current location...
   currentLocation: current location
   addImage: Add image
+  save: Save
+newPlaceForm:
+  lat: Latitude
+  lon: Longitude
+  elev: Elevation
+  name: Name
+  description: Description
+  required: (required)

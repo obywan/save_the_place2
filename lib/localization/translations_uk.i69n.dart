@@ -40,6 +40,8 @@ class Translations_uk extends Translations {
   MessagesTranslations_uk get messages => MessagesTranslations_uk(this);
   DialogsTranslations_uk get dialogs => DialogsTranslations_uk(this);
   GeneralTranslations_uk get general => GeneralTranslations_uk(this);
+  NewPlaceFormTranslations_uk get newPlaceForm =>
+      NewPlaceFormTranslations_uk(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -55,6 +57,8 @@ class Translations_uk extends Translations {
         return dialogs;
       case 'general':
         return general;
+      case 'newPlaceForm':
+        return newPlaceForm;
       default:
         return super[key];
     }
@@ -141,6 +145,7 @@ class GeneralTranslations_uk extends GeneralTranslations {
   String get waitingForLocation => "Визначаємо координати...";
   String get currentLocation => "Поточні координати";
   String get addImage => "Додати зображення";
+  String get save => "Зберегти";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -158,6 +163,42 @@ class GeneralTranslations_uk extends GeneralTranslations {
         return currentLocation;
       case 'addImage':
         return addImage;
+      case 'save':
+        return save;
+      default:
+        return super[key];
+    }
+  }
+}
+
+class NewPlaceFormTranslations_uk extends NewPlaceFormTranslations {
+  final Translations_uk _parent;
+  const NewPlaceFormTranslations_uk(this._parent) : super(_parent);
+  String get lat => "Широта";
+  String get lon => "Довгота";
+  String get elev => "Висота";
+  String get name => "Ім'я";
+  String get description => "Опис";
+  String get required => "(обов'язково)";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'lat':
+        return lat;
+      case 'lon':
+        return lon;
+      case 'elev':
+        return elev;
+      case 'name':
+        return name;
+      case 'description':
+        return description;
+      case 'required':
+        return required;
       default:
         return super[key];
     }

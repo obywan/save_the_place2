@@ -15,3 +15,11 @@ general:
   waitingForLocation: Визначаємо координати...
   currentLocation: Поточні координати
   addImage: Додати зображення
+  save: Зберегти
+newPlaceForm:
+  lat: Широта
+  lon: Довгота
+  elev: Висота
+  name: Ім'я
+  description: Опис
+  required: (обов'язково)
