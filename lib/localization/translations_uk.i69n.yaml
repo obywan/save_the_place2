@@ -1,1 +1,17 @@
-homePageTitle: Домашня сторінка
+pageTitles:
+  homePageTitle: Домашня сторінка
+  addNewPageTitle: Додати локацію
+messages:
+  errorMessage: Хммм, щось не так =/
+  copied: скопійовано
+dialogs:
+  deleteTite: Видалити локацію
+  areYouSureText: Ви впевнені?
+  positiveAnswer: Так
+  negativeAnswer: Ні
+general:
+  noItemsInList: Список збережених локацій буде тут
+  distance: Відстань
+  waitingForLocation: Визначаємо координати...
+  currentLocation: Поточні координати
+  addImage: Додати зображення

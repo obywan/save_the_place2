@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:save_the_place/ui/widgets/spinny_thing.dart';
+import '../../localization/localizations.dart';
+import 'spinny_thing.dart';
 
 class CurrentLocationRow extends StatelessWidget {
   const CurrentLocationRow({
@@ -27,10 +28,11 @@ class CurrentLocationRow extends StatelessWidget {
   }
 
   Widget _getContainer(BuildContext context, String coordinates, Color color) {
+    final translations = CustomLocalizations.of(context);
     return InkWell(
       onTap: () {
         Clipboard.setData(ClipboardData(text: coordinates));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('copied')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translations.messages.copied)));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -45,7 +47,7 @@ class CurrentLocationRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'your location:',
+                        translations.general.currentLocation,
                         style: TextStyle(fontSize: 10, color: Colors.grey),
                       ),
                       Text(

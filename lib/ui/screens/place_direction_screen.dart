@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:save_the_place/ui/screens/place_details_screen.dart';
+import '../../localization/localizations.dart';
+import 'place_details_screen.dart';
 
 import '../../data/models/place.dart';
 import '../../helpers/extension_methods.dart';
@@ -14,6 +15,7 @@ class PlaceDirectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Place place = ModalRoute.of(context)!.settings.arguments as Place;
     final positionStream = Geolocator.getPositionStream(intervalDuration: Duration(seconds: 1));
+    final translations = CustomLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +50,7 @@ class PlaceDirectionScreen extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Text('Distance: ${distance.getReadableDistance()}'),
+                          Text('${translations.general.distance}: ${distance.getReadableDistance()}'),
                           Compass(bearing: bearing),
                         ],
                       ),
@@ -56,7 +58,7 @@ class PlaceDirectionScreen extends StatelessWidget {
                   ],
                 );
               } else
-                return Text('Waiting for current location...');
+                return Text(translations.general.waitingForLocation);
             } else {
               return SpinnyThing();
             }

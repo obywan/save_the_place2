@@ -1,1 +1,17 @@
-homePageTitle: Home page
+pageTitles:
+  homePageTitle: Home page
+  addNewPageTitle: Add new place
+messages:
+  errorMessage: Hmmm, something wrong =/
+  copied: copied
+dialogs:
+  deleteTite: Delete place
+  areYouSureText: Are you sure?
+  positiveAnswer: Yep
+  negativeAnswer: Nope
+general:
+  noItemsInList: Locations list will be here
+  distance: distance
+  waitingForLocation: Waiting for current location...
+  currentLocation: current location
+  addImage: Add image

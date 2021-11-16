@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/place.dart';
+import '../../localization/localizations.dart';
 import '../screens/place_direction_screen.dart';
 
 class PlacesList extends StatelessWidget {
@@ -10,17 +11,18 @@ class PlacesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translations = CustomLocalizations.of(context);
     return RefreshIndicator(
       onRefresh: () => _refreshList(context),
       child: BlocBuilder<PlacesBloc, PlacesState>(
         builder: (context, state) {
           if (state is PlacesLoading || state is PlacesAdded) return _getLoading();
-          if (state is PlacesError) return _getErrorMessage();
+          if (state is PlacesError) return _getErrorMessage(translations.messages.errorMessage);
           if (state is PlacesLoaded) {
             return _getList(context, state.places);
           }
           return Center(
-            child: Text('Locations list will be here'),
+            child: Text(translations.general.noItemsInList),
           );
         },
       ),
@@ -63,17 +65,18 @@ class PlacesList extends StatelessWidget {
   }
 
   Future<bool?> _confirmDelete(BuildContext context) {
+    final tr = CustomLocalizations.of(context);
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Confirm"),
-            content: const Text("Are you sure you wish to delete this item?"),
+            title: Text(tr.dialogs.deleteTite),
+            content: Text(tr.dialogs.areYouSureText),
             actions: <Widget>[
-              TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text("DELETE")),
+              TextButton(onPressed: () => Navigator.of(context).pop(true), child: Text(tr.dialogs.positiveAnswer)),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text("CANCEL"),
+                child: Text(tr.dialogs.negativeAnswer),
               ),
             ],
           );
@@ -84,7 +87,7 @@ class PlacesList extends StatelessWidget {
     return Center(child: CircularProgressIndicator());
   }
 
-  Widget _getErrorMessage() {
-    return Center(child: Text('Something went wrong'));
+  Widget _getErrorMessage(String message) {
+    return Center(child: Text(message));
   }
 }

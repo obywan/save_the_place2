@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_place/localization/translations.i69n.dart';
-import 'package:save_the_place/localization/translations_uk.i69n.dart';
+import 'translations.i69n.dart';
+import 'translations_uk.i69n.dart';
 
 const _supportedLocales = ['en', 'uk'];
 

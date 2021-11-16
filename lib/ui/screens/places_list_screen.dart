@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:save_the_place/localization/localizations.dart';
+import '../../localization/localizations.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../widgets/current_location_row.dart';
@@ -16,7 +16,7 @@ class LocationsListScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(translations.homePageTitle),
+          title: Text(translations.pageTitles.homePageTitle),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,

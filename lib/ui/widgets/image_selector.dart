@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../localization/localizations.dart';
 
 class ImageSelector extends StatefulWidget {
   final Function callback;
@@ -58,6 +59,7 @@ class _ImageSelectorState extends State<ImageSelector> {
   }
 
   Widget _placeholder(BuildContext context) {
+    final translations = CustomLocalizations.of(context);
     return DottedBorder(
       borderType: BorderType.RRect,
       radius: Radius.circular(15),
@@ -76,7 +78,7 @@ class _ImageSelectorState extends State<ImageSelector> {
               color: Colors.grey.shade400,
             ),
             Text(
-              'Add image',
+              translations.general.addImage,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey.shade400),
             ),
           ],
