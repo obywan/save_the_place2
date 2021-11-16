@@ -53,7 +53,7 @@ class _ImageSelectorState extends State<ImageSelector> {
         _imagePicked = true;
         widget.callback(pickedFile.path);
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }
@@ -79,6 +79,7 @@ class _ImageSelectorState extends State<ImageSelector> {
             ),
             Text(
               translations.general.addImage,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey.shade400),
             ),
           ],

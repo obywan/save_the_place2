@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:save_the_place/localization/localizations.dart';
+import 'package:save_the_place/localization/translations.i69n.dart';
 import '../../helpers/extension_methods.dart';
 
 import '../../bloc/places/places_bloc.dart';
@@ -56,12 +57,12 @@ class _NewLocationFormState extends State<NewLocationForm> {
     );
   }
 
-  Widget _initial(BuildContext context) {
+  Widget _initial(BuildContext context, Translations tr) {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () => _submitForm(context),
-        child: Text('Save'),
+        child: Text(tr.general.save),
       ),
     );
   }
@@ -139,7 +140,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                 builder: (context, state) {
                   if (state is PlacesLoading)
                     return _loading();
-                  else if (state is PlacesInitial || state is PlacesLoaded || state is PlacesError) return _initial(context);
+                  else if (state is PlacesInitial || state is PlacesLoaded || state is PlacesError) return _initial(context, translations);
 
                   return Container();
                 },
