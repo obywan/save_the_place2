@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:save_the_place/localization/localizations.dart';
-import 'package:save_the_place/localization/translations.i69n.dart';
+import '../../localization/localizations.dart';
+import '../../localization/translations.i69n.dart';
 import '../../helpers/extension_methods.dart';
 
 import '../../bloc/places/places_bloc.dart';

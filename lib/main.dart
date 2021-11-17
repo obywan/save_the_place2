@@ -7,7 +7,7 @@ import 'bloc/places/places_bloc.dart';
 import 'data/repositories/local_places_repository.dart';
 import 'helpers/routes.dart';
 import 'localization/localizations.dart';
-import 'ui/screens/places_list_screen.dart';
+import 'ui/screens/tabs_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LocationsListScreen(),
+        home: TabsScreen(),
         routes: Routes.routesTable,
         localizationsDelegates: [
           CustomLocalizations.delegate,

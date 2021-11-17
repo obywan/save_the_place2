@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:save_the_place/localization/translations.i69n.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/place.dart';
@@ -19,7 +20,7 @@ class PlacesList extends StatelessWidget {
           if (state is PlacesLoading || state is PlacesAdded) return _getLoading();
           if (state is PlacesError) return _getErrorMessage(translations.messages.errorMessage);
           if (state is PlacesLoaded) {
-            return _getList(context, state.places);
+            return _getList(context, state.places, translations);
           }
           return Center(
             child: Text(translations.general.noItemsInList),
@@ -34,34 +35,37 @@ class PlacesList extends StatelessWidget {
     return Future(() => {});
   }
 
-  Widget _getList(BuildContext context, List<Place> places) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (ctx, i) => Card(
-        child: Dismissible(
-          background: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            color: Colors.red,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(Icons.delete),
-              ],
+  Widget _getList(BuildContext context, List<Place> places, Translations translations) {
+    if (places.length == 0)
+      return Text(translations.general.noItemsInList);
+    else
+      return ListView.builder(
+        shrinkWrap: true,
+        itemBuilder: (ctx, i) => Card(
+          child: Dismissible(
+            background: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              color: Colors.red,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.delete),
+                ],
+              ),
             ),
+            key: ValueKey(places[i].location.latitude + places[i].location.longitude),
+            child: ListTile(
+              onTap: () => Navigator.of(context).pushNamed(PlaceDirectionScreen.route, arguments: places[i]),
+              title: Text(places[i].name),
+            ),
+            onDismissed: (dir) => BlocProvider.of<PlacesBloc>(context, listen: false).add(RemovePlace(places[i])),
+            confirmDismiss: (dir) async {
+              return await _confirmDelete(context);
+            },
           ),
-          key: ValueKey(places[i].location.latitude + places[i].location.longitude),
-          child: ListTile(
-            onTap: () => Navigator.of(context).pushNamed(PlaceDirectionScreen.route, arguments: places[i]),
-            title: Text(places[i].name),
-          ),
-          onDismissed: (dir) => BlocProvider.of<PlacesBloc>(context, listen: false).add(RemovePlace(places[i])),
-          confirmDismiss: (dir) async {
-            return await _confirmDelete(context);
-          },
         ),
-      ),
-      itemCount: places.length,
-    );
+        itemCount: places.length,
+      );
   }
 
   Future<bool?> _confirmDelete(BuildContext context) {

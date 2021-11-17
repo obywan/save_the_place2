@@ -34,34 +34,39 @@ class CurrentLocationRow extends StatelessWidget {
         Clipboard.setData(ClipboardData(text: coordinates));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translations.messages.copied)));
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        color: color,
-        height: 64,
-        child: coordinates.isNotEmpty
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        translations.general.currentLocation,
-                        style: TextStyle(fontSize: 10, color: Colors.grey),
-                      ),
-                      Text(
-                        coordinates,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  SvgPicture.asset(
-                    'assets/svg/copy.svg',
-                  )
-                ],
-              )
-            : SpinnyThing(),
+      child: Card(
+        elevation: 6,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: 64,
+          child: coordinates.isNotEmpty
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                    ),
+                    SizedBox(width: 16),
+                    // Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     Text(
+                    //       translations.general.currentLocation,
+                    //       style: TextStyle(fontSize: 10, color: Colors.grey),
+                    //     ),
+                    Text(
+                      coordinates,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    //   ],
+                    // ),
+                    Spacer(),
+                    Icon(Icons.copy)
+                  ],
+                )
+              : SpinnyThing(),
+        ),
       ),
     );
   }
