@@ -70,6 +70,7 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
   const PageTitlesTranslations_uk(this._parent) : super(_parent);
   String get homePageTitle => "Домашня сторінка";
   String get addNewPageTitle => "Додати локацію";
+  String get compassPageTitle => "Компас";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -81,6 +82,8 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
         return homePageTitle;
       case 'addNewPageTitle':
         return addNewPageTitle;
+      case 'compassPageTitle':
+        return compassPageTitle;
       default:
         return super[key];
     }

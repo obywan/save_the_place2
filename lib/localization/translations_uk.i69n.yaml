@@ -1,6 +1,7 @@
 pageTitles:
   homePageTitle: Домашня сторінка
   addNewPageTitle: Додати локацію
+  compassPageTitle: Компас
 messages:
   errorMessage: Хммм, щось не так =/
   copied: скопійовано

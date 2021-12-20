@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../localization/localizations.dart';
+import 'compass_screen.dart';
 import 'places_list_screen.dart';
-import '../widgets/places_list.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -17,9 +19,7 @@ class _TabsScreenState extends State<TabsScreen> {
       case 0:
         return LocationsListScreen();
       case 1:
-        return Container(
-          color: Colors.green,
-        );
+        return CompassScreen();
       case 2:
         return Container(
           color: Colors.blue,
@@ -29,6 +29,21 @@ class _TabsScreenState extends State<TabsScreen> {
         return Container(
           color: Colors.amber,
         );
+    }
+  }
+
+  String _getTabName() {
+    final translations = CustomLocalizations.of(context);
+    switch (_selectedTab) {
+      case 0:
+        return translations.pageTitles.homePageTitle;
+      case 1:
+        return translations.pageTitles.compassPageTitle;
+      case 2:
+        return 'Tab3';
+
+      default:
+        return 'Noooooo';
     }
   }
 
@@ -47,7 +62,10 @@ class _TabsScreenState extends State<TabsScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        body: SafeArea(child: _getChild()),
+        appBar: AppBar(
+          title: Text(_getTabName()),
+        ),
+        body: _getChild(),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             _getNavBarItem('Saved', Icons.list),

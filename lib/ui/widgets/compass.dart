@@ -10,7 +10,7 @@ import 'package:motion_sensors/motion_sensors.dart';
 class Compass extends StatefulWidget {
   final double bearing;
 
-  const Compass({Key? key, required this.bearing}) : super(key: key);
+  const Compass({Key? key, this.bearing = double.maxFinite}) : super(key: key);
 
   @override
   _CompassState createState() => _CompassState();
@@ -82,9 +82,10 @@ class _CompassState extends State<Compass> {
         Center(
           child: getAnimatedWidget(north / pi / 2, 'assets/svg/compass.svg'),
         ),
-        Center(
-          child: getAnimatedWidget(target / pi / 2, 'assets/svg/arrow.svg'),
-        ),
+        if (widget.bearing < double.maxFinite)
+          Center(
+            child: getAnimatedWidget(target / pi / 2, 'assets/svg/arrow.svg'),
+          ),
       ],
     );
   }

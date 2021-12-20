@@ -1,6 +1,7 @@
 pageTitles:
   homePageTitle: Home page
   addNewPageTitle: Add new place
+  compassPageTitle: Add new place
 messages:
   errorMessage: Hmmm, something wrong =/
   copied: copied
