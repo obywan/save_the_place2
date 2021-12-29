@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../data/models/place.dart';
 import '../../data/repositories/place_repository.dart';
@@ -12,58 +12,62 @@ part 'places_state.dart';
 class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
   final PlacesResitory _placesRepository;
 
-  PlacesBloc(this._placesRepository) : super(PlacesInitial());
-
-  @override
-  Stream<PlacesState> mapEventToState(
-    PlacesEvent event,
-  ) async* {
-    if (event is GetPlaces)
-      yield* _onGetPlaces(event);
-    else if (event is AddPlace)
-      yield* _onAddPlace(event);
-    else if (event is RemovePlace) yield* _onRemovePlace(event);
+  PlacesBloc(this._placesRepository) : super(PlacesInitial()) {
+    on<GetPlaces>(_onGetPlaces);
+    on<AddPlace>(_onAddPlace);
+    on<RemovePlace>(_onRemovePlace);
   }
 
-  Stream<PlacesState> _onGetPlaces(PlacesEvent event) async* {
-    yield PlacesLoading();
+  // @override
+  // Stream<PlacesState> mapEventToState(
+  //   PlacesEvent event,
+  // ) async* {
+  //   if (event is GetPlaces)
+  //     yield* _onGetPlaces(event);
+  //   else if (event is AddPlace)
+  //     yield* _onAddPlace(event);
+  //   else if (event is RemovePlace) yield* _onRemovePlace(event);
+  // }
+
+  Future<void> _onGetPlaces(GetPlaces event, Emitter<PlacesState> emit) async {
+    emit(PlacesLoading());
     try {
       final places = await _placesRepository.getPlaces();
-      yield PlacesLoaded(places);
+      emit(PlacesLoaded(places));
     } catch (e) {
-      yield PlacesError(e.toString());
+      emit(PlacesError(e.toString()));
     }
   }
 
-  Stream<PlacesState> _onAddPlace(PlacesEvent event) async* {
-    yield PlacesLoading();
+  Future<void> _onAddPlace(AddPlace event, Emitter<PlacesState> emit) async {
+    emit(PlacesLoading());
     try {
-      final result = await _placesRepository.addPlace((event as AddPlace).place);
+      final result = await _placesRepository.addPlace((event).place);
       if (!result)
-        yield PlacesError('Adding place failed');
+        emit(PlacesError('Adding place failed'));
       else {
-        yield PlacesAdded();
+        emit(PlacesAdded());
         final places = await _placesRepository.getPlaces();
-        yield PlacesLoaded(places);
+        emit(PlacesLoaded(places));
       }
     } catch (e) {
-      yield PlacesError(e.toString());
+      emit(PlacesError(e.toString()));
     }
   }
 
-  Stream<PlacesState> _onRemovePlace(PlacesEvent event) async* {
-    yield PlacesLoading();
+  Future<void> _onRemovePlace(RemovePlace event, Emitter<PlacesState> emit) async {
+    emit(PlacesLoading());
     try {
-      final result = await _placesRepository.removePlace((event as RemovePlace).place);
+      final result = await _placesRepository.removePlace((event).place);
       if (!result)
-        yield PlacesError('Removing place failed');
+        emit(PlacesError('Removing place failed'));
       else {
-        yield PlacesRemoved();
+        emit(PlacesRemoved());
         final places = await _placesRepository.getPlaces();
-        yield PlacesLoaded(places);
+        emit(PlacesLoaded(places));
       }
     } catch (e) {
-      yield PlacesError(e.toString());
+      emit(PlacesError(e.toString()));
     }
   }
 }

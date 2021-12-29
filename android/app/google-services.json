@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "418086455722",
+    "project_id": "pointme-f5b1c",
+    "storage_bucket": "pointme-f5b1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418086455722:android:db6eb6d5bbb37ca2b143d3",
+        "android_client_info": {
+          "package_name": "com.golodyukoleg.pointme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418086455722-mog321b33j6lnbajn9h1dila94cbe0ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNbe6vUIl067t97veMAC-N-4CGej-v1jY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418086455722-mog321b33j6lnbajn9h1dila94cbe0ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
