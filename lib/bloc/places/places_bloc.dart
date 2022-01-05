@@ -10,7 +10,7 @@ part 'places_event.dart';
 part 'places_state.dart';
 
 class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
-  final PlacesResitory _placesRepository;
+  final PlacesRepository _placesRepository;
 
   PlacesBloc(this._placesRepository) : super(PlacesInitial()) {
     on<GetPlaces>(_onGetPlaces);

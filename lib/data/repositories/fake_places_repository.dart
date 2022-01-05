@@ -2,7 +2,7 @@ import '../models/location.dart';
 import '../models/place.dart';
 import 'place_repository.dart';
 
-class FakePlacesRepository extends PlacesResitory {
+class FakePlacesRepository extends PlacesRepository {
   List<Place> fakePlaces = [
     Place(Location(latitude: 49.547, longitude: 25.635, elevation: 0.0), 'Збаразьке кільце', 'Центр збаразького кільця, де зараз роблять ремонт', ''),
     Place(Location(latitude: 49.157, longitude: 25.704, elevation: 0.0), 'Дім', 'Точка біля воріт в селі', ''),

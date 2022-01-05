@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../localization/localizations.dart';
-import 'place_details_screen.dart';
 
 import '../../data/models/place.dart';
+
 import '../../helpers/extension_methods.dart';
+import '../../localization/localizations.dart';
 import '../widgets/compass.dart';
 import '../widgets/details_text_row.dart';
 import '../widgets/spinny_thing.dart';
+import 'place_details_screen.dart';
 
 class PlaceDirectionScreen extends StatelessWidget {
   static const String route = '/place_direction_screen';
+
   @override
   Widget build(BuildContext context) {
     final Place place = ModalRoute.of(context)!.settings.arguments as Place;
-    final positionStream = Geolocator.getPositionStream(intervalDuration: Duration(seconds: 1));
+    final positionStream = Geolocator.getPositionStream();
     final translations = CustomLocalizations.of(context);
 
     return Scaffold(

@@ -4,7 +4,7 @@ import '../../helpers/local_storage_helper.dart';
 import '../models/place.dart';
 import 'place_repository.dart';
 
-class LocalPlacesRepository extends PlacesResitory {
+class LocalPlacesRepository extends PlacesRepository {
   static const String filename = 'places.json';
   List<Place> places = [];
   bool _initialLoadIsDone = false;

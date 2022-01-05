@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../localization/localizations.dart';
 import 'spinny_thing.dart';
@@ -12,11 +11,12 @@ class CurrentLocationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _positionStream = Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.best, intervalDuration: Duration(seconds: 1));
+    final _positionStream = Geolocator.getPositionStream();
 
     return StreamBuilder<Position>(
       stream: _positionStream,
       builder: (_, positionSnapshot) {
+        debugPrint('${positionSnapshot.connectionState} ---- ${positionSnapshot.data}');
         if (positionSnapshot.connectionState == ConnectionState.active && positionSnapshot.data != null) {
           final coords = '${positionSnapshot.data?.latitude.toStringAsFixed(5)}, ${positionSnapshot.data?.longitude.toStringAsFixed(5)}';
           return _getContainer(context, coords, Colors.green.shade100);

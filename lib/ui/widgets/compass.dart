@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'package:motion_sensors/motion_sensors.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 // import 'package:animated_rotation/animated_rotation.dart' as animR;
 
 class Compass extends StatefulWidget {

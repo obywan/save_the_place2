@@ -12,6 +12,10 @@ class LocalStorageHelper {
 
   static Future<String> readFile(String filename) async {
     final combinedPath = await _getFilePath(filename);
+    final file = File(combinedPath);
+    final fileExists = await file.exists();
+    if (!fileExists) return '';
+
     final data = await File(combinedPath).readAsString();
     return data;
   }
