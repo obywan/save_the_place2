@@ -27,9 +27,9 @@ class LocalPlacesRepository extends PlacesRepository {
 
   @override
   Future<List<Place>> getPlaces() async {
-    if (!_initialLoadIsDone) {
-      await _initLoad();
-    }
+    // if (!_initialLoadIsDone) {
+    await _initLoad();
+    // }
     return places;
   }
 

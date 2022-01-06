@@ -18,17 +18,6 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
     on<RemovePlace>(_onRemovePlace);
   }
 
-  // @override
-  // Stream<PlacesState> mapEventToState(
-  //   PlacesEvent event,
-  // ) async* {
-  //   if (event is GetPlaces)
-  //     yield* _onGetPlaces(event);
-  //   else if (event is AddPlace)
-  //     yield* _onAddPlace(event);
-  //   else if (event is RemovePlace) yield* _onRemovePlace(event);
-  // }
-
   Future<void> _onGetPlaces(GetPlaces event, Emitter<PlacesState> emit) async {
     emit(PlacesLoading());
     try {

@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:save_the_place/data/repositories/local_places_repository.dart';
+import 'package:save_the_place/data/repositories/place_repository.dart';
+import 'package:save_the_place/helpers/firebase_sync_helper.dart';
 
 class AuthScreen extends StatelessWidget {
   static const String route = '/auth_screen';
@@ -18,7 +21,18 @@ class AuthScreen extends StatelessWidget {
   }
 
   Widget _userDetails() {
-    return Text(FirebaseAuth.instance.currentUser!.displayName ?? 'unknown');
+    PlacesRepository pr = LocalPlacesRepository();
+    FirebaseSyncHelper firebaseSyncHelper = FirebaseSyncHelper(pr);
+    return Column(
+      children: [
+        Text(FirebaseAuth.instance.currentUser!.displayName ?? 'unknown'),
+        TextButton(
+            onPressed: () {
+              firebaseSyncHelper.sync();
+            },
+            child: Text('Sync data')),
+      ],
+    );
   }
 
   Widget _getButton() {
@@ -27,7 +41,7 @@ class AuthScreen extends StatelessWidget {
     );
   }
 
-  Future<UserCredential?> _signInWithGoogle() async {
+  Future _signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) return null;
@@ -43,7 +57,6 @@ class AuthScreen extends StatelessWidget {
       idToken: googleAuth.idToken,
     );
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

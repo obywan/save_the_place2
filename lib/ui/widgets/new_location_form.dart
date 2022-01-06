@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/location.dart' as loc;
 import '../../data/models/place.dart';
-import '../../data/repositories/location_repository.dart';
 import '../../helpers/extension_methods.dart';
 import '../../helpers/form_validators.dart';
 import '../../localization/localizations.dart';
@@ -45,7 +44,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
       BlocProvider.of<PlacesBloc>(context, listen: false).add(
         AddPlace(
-          Place(loc.Location(latitude: vals[lat], longitude: vals[lon], elevation: vals[alt]), vals[name], vals[desc], vals[path]),
+          Place(loc.Location(latitude: vals[lat], longitude: vals[lon], elevation: vals[alt]), vals[name], vals[desc], vals[path], DateTime.now()),
         ),
       );
     }
@@ -71,7 +70,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
   Widget build(BuildContext context) {
     final translations = CustomLocalizations.of(context);
     return FutureBuilder<Position>(
-      future: LocationRepository.determinePosition(),
+      future: Geolocator.getCurrentPosition(),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError)

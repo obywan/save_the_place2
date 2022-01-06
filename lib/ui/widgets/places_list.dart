@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,6 +38,7 @@ class PlacesList extends StatelessWidget {
   }
 
   Widget _getList(BuildContext context, List<Place> places, Translations translations) {
+    debugPrint(jsonEncode(places));
     if (places.length == 0)
       return Text(translations.general.noItemsInList);
     else
