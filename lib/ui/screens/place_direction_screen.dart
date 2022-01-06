@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../data/models/place.dart';
-
 import '../../helpers/extension_methods.dart';
 import '../../localization/localizations.dart';
 import '../widgets/compass.dart';

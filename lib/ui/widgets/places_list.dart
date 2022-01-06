@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../localization/translations.i69n.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/place.dart';
 import '../../localization/localizations.dart';
+import '../../localization/translations.i69n.dart';
 import '../screens/place_direction_screen.dart';
 
 class PlacesList extends StatelessWidget {

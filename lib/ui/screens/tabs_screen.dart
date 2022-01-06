@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:save_the_place/helpers/permission_helper.dart';
+import 'package:save_the_place/ui/widgets/spinny_thing.dart';
+import '../tabs/settings_screen.dart';
 
 import '../../localization/localizations.dart';
-import 'compass_screen.dart';
-import 'places_list_screen.dart';
+import '../tabs/compass_screen.dart';
+import '../tabs/places_list_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -14,22 +17,42 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedTab = 0;
 
-  Widget _getChild() {
+  Widget _getTab() {
     switch (_selectedTab) {
       case 0:
         return LocationsListScreen();
       case 1:
         return CompassScreen();
       case 2:
-        return Container(
-          color: Colors.blue,
-        );
+        return SettingsScreen();
 
       default:
         return Container(
           color: Colors.amber,
         );
     }
+  }
+
+  Widget _getChild() {
+    return FutureBuilder<LocationPermissionStatus>(
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data) {
+              case LocationPermissionStatus.Alright:
+                return _getTab();
+              case LocationPermissionStatus.Denied:
+                return Text('We need location permission to proceed');
+              case LocationPermissionStatus.DeniedForever:
+                return Text('We need location permission to proceed');
+              case LocationPermissionStatus.NotEnabled:
+                return Text('We need location enabled to proceed');
+              case null:
+                return Text('This was not supposed to happen');
+            }
+          }
+          return SpinnyThing();
+        },
+        future: PermissionHelper.checkPermissions());
   }
 
   String _getTabName() {
@@ -40,7 +63,7 @@ class _TabsScreenState extends State<TabsScreen> {
       case 1:
         return translations.pageTitles.compassPageTitle;
       case 2:
-        return 'Tab3';
+        return 'Settings';
 
       default:
         return 'Noooooo';

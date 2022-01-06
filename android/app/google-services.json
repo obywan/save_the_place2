@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "418086455722-43eq91g153o407q2bpa7fsdvni2n9dda.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.golodyukoleg.pointme",
+            "certificate_hash": "5127362134d20161ab3dd1033b58f7a54f68a073"
+          }
+        },
+        {
+          "client_id": "418086455722-5e8060th8heg1s9ek879qncqn90hejec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.golodyukoleg.pointme",
+            "certificate_hash": "34a1548b18da261bc9c1712c4eaf5eeb9490b7a5"
+          }
+        },
+        {
           "client_id": "418086455722-mog321b33j6lnbajn9h1dila94cbe0ll.apps.googleusercontent.com",
           "client_type": 3
         }
