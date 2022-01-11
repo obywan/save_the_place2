@@ -14,6 +14,11 @@ class FirebaseSyncHelper {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) return false;
     final data = jsonEncode(await placesRepository.getPlaces());
+
+    CollectionReference userPlaces = FirebaseFirestore.instance.collection('users_places');
+
+    await userPlaces.doc(user.uid).set({'list': data}, SetOptions(merge: true));
+
     debugPrint(data);
     // FirebaseFirestore.instance.collection('userdata').doc(user.uid).set(data)
     return true;

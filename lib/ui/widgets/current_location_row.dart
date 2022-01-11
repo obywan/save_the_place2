@@ -16,7 +16,7 @@ class CurrentLocationRow extends StatelessWidget {
     return StreamBuilder<Position>(
       stream: _positionStream,
       builder: (_, positionSnapshot) {
-        debugPrint('${positionSnapshot.connectionState} ---- ${positionSnapshot.data}');
+        // debugPrint('${positionSnapshot.connectionState} ---- ${positionSnapshot.data}');
         if (positionSnapshot.connectionState == ConnectionState.active && positionSnapshot.data != null) {
           final coords = '${positionSnapshot.data?.latitude.toStringAsFixed(5)}, ${positionSnapshot.data?.longitude.toStringAsFixed(5)}';
           return _getContainer(context, coords, Colors.green.shade100);

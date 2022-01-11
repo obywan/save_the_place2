@@ -7,7 +7,7 @@ import 'place_repository.dart';
 class LocalPlacesRepository extends PlacesRepository {
   static const String filename = 'places.json';
   List<Place> places = [];
-  bool _initialLoadIsDone = false;
+  // bool _initialLoadIsDone = false;
 
   @override
   Future<bool> addPlace(Place p) async {
@@ -42,6 +42,6 @@ class LocalPlacesRepository extends PlacesRepository {
     } on Exception {
       // nothing
     }
-    _initialLoadIsDone = true;
+    // _initialLoadIsDone = true;
   }
 }
