@@ -18,4 +18,12 @@ class Place {
 
   Map<String, dynamic> toJson() =>
       {'location': location, 'name': name, 'description': description, 'imagePath': imagePath, 'timestamp': timestamp.toIso8601String()};
+
+  @override
+  bool operator ==(covariant Place other) {
+    return location == other.location && name == other.name;
+  }
+
+  @override
+  int get hashCode => location.hashCode;
 }

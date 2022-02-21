@@ -15,4 +15,11 @@ class Location {
         'longitude': longitude,
         'elevation': elevation,
       };
+  @override
+  bool operator ==(covariant Location other) {
+    return latitude == other.latitude && longitude == other.longitude && elevation == other.elevation;
+  }
+
+  @override
+  int get hashCode => (latitude + longitude + elevation).hashCode;
 }
