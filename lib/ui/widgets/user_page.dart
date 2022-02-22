@@ -7,11 +7,13 @@ import 'spinny_thing.dart';
 
 class UserPage extends StatelessWidget {
   final Function stateSetterCallback;
+  final User user;
 
-  const UserPage({Key? key, required this.stateSetterCallback}) : super(key: key);
+  const UserPage({Key? key, required this.stateSetterCallback, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FirebaseSyncBloc fbc = BlocProvider.of<FirebaseSyncBloc>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -19,20 +21,21 @@ class UserPage extends StatelessWidget {
         Text('Signed in as:'),
         SizedBox(height: 8),
         Text(
-          FirebaseAuth.instance.currentUser!.displayName ?? 'unknown',
+          user.displayName ?? 'unknown',
           style: Theme.of(context).textTheme.headline5,
         ),
         BlocConsumer<FirebaseSyncBloc, FirebaseSyncState>(
+          bloc: fbc,
           listener: (context, state) {
             if (state is FirebaseSyncError) {
-              _showMessage(context, 'Failed');
+              _showMessage(context, -1);
             } else if (state is FirebaseSyncReady) {
-              _showMessage(context, 'Success');
+              _showMessage(context, 1);
             }
           },
           builder: (context, state) {
             if (state is FirebaseSyncError || state is FirebaseSyncInitial || state is FirebaseSyncReady) {
-              return _getControls(context);
+              return _getControls(fbc);
             } else
               return SpinnyThing();
           },
@@ -41,13 +44,13 @@ class UserPage extends StatelessWidget {
     );
   }
 
-  Column _getControls(BuildContext context) {
+  Column _getControls(FirebaseSyncBloc fbc) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         TextButton.icon(
           onPressed: () {
-            BlocProvider.of<FirebaseSyncBloc>(context, listen: false).add(SyncPlaces());
+            fbc.add(SyncPlaces(user));
           },
           label: Text('Sync data'),
           icon: Icon(Icons.sync),
@@ -67,13 +70,57 @@ class UserPage extends StatelessWidget {
     stateSetterCallback(false);
   }
 
-  void _showMessage(BuildContext context, String message) {
+  // -1 == fail
+  // 0 == info
+  // 1 == success
+  void _showMessage(BuildContext context, int messageType, {String message = ''}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Row(
-          children: [Icon(Icons.done), Text('Done')],
+        content: Container(
+          color: Colors.grey.shade300,
+          child: Row(
+            children: [_getMessageIcon(messageType), Text(_getMessageText(messageType))],
+          ),
         ),
       ),
     );
+  }
+
+  String _getMessageText(int t) {
+    switch (t) {
+      case -1:
+        return 'Failed';
+      case 0:
+        return '';
+      case 1:
+        return 'Success';
+      default:
+        return '';
+    }
+  }
+
+  Icon _getMessageIcon(int t) {
+    switch (t) {
+      case -1:
+        return Icon(
+          Icons.error,
+          color: Colors.red,
+        );
+      case 0:
+        return Icon(
+          Icons.info,
+          color: Colors.grey,
+        );
+      case 1:
+        return Icon(
+          Icons.done,
+          color: Colors.green,
+        );
+      default:
+        return Icon(
+          Icons.info,
+          color: Colors.grey,
+        );
+    }
   }
 }

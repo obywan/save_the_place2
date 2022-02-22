@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_place/helpers/permission_helper.dart';
-import 'package:save_the_place/ui/widgets/spinny_thing.dart';
+import '../../helpers/permission_helper.dart';
+import '../widgets/spinny_thing.dart';
 import '../tabs/settings_screen.dart';
 
 import '../../localization/localizations.dart';

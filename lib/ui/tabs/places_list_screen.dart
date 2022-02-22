@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../helpers/http_helper.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../widgets/current_location_row.dart';

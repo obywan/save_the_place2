@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_place/ui/screens/auth_screen.dart';
+import '../ui/screens/auth_screen.dart';
 
 import '../ui/screens/place_add_screen.dart';
 import '../ui/screens/place_details_screen.dart';

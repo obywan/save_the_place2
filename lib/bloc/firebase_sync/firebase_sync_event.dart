@@ -3,4 +3,8 @@ part of 'firebase_sync_bloc.dart';
 @immutable
 abstract class FirebaseSyncEvent {}
 
-class SyncPlaces extends FirebaseSyncEvent {}
+class SyncPlaces extends FirebaseSyncEvent {
+  final User user;
+
+  SyncPlaces(this.user);
+}

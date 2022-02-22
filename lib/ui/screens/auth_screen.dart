@@ -30,7 +30,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _getContent(FirebaseAuth auth) => _loading
       ? CircularProgressIndicator()
-      : (auth.currentUser != null ? UserPage(stateSetterCallback: setLoading) : SignInPage(setStateCallback: setLoading));
+      : (auth.currentUser != null
+          ? UserPage(
+              stateSetterCallback: setLoading,
+              user: auth.currentUser!,
+            )
+          : SignInPage(setStateCallback: setLoading));
 
   void setLoading(bool b) {
     setState(() {

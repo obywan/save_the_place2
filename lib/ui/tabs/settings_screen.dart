@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:save_the_place/ui/screens/auth_screen.dart';
+import '../screens/auth_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
