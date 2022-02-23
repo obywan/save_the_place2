@@ -22,9 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
       appBar: AppBar(
         title: Text('Account'),
       ),
-      body: Center(
-        child: _getContent(auth),
-      ),
+      body: _getContent(auth),
     );
   }
 

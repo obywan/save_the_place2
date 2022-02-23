@@ -8,3 +8,9 @@ class SyncPlaces extends FirebaseSyncEvent {
 
   SyncPlaces(this.user);
 }
+
+class WipeData extends FirebaseSyncEvent {
+  final User user;
+
+  WipeData(this.user);
+}

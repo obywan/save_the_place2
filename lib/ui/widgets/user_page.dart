@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:save_the_place/ui/widgets/confirmation_modal_sheet.dart';
 
 import '../../bloc/firebase_sync/firebase_sync_bloc.dart';
 import 'spinny_thing.dart';
@@ -15,15 +16,14 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseSyncBloc fbc = BlocProvider.of<FirebaseSyncBloc>(context, listen: false);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('Signed in as:'),
+        SizedBox(height: 32),
+        Text(user.displayName ?? 'unknown', style: Theme.of(context).textTheme.headline5, textAlign: TextAlign.center),
         SizedBox(height: 8),
-        Text(
-          user.displayName ?? 'unknown',
-          style: Theme.of(context).textTheme.headline5,
-        ),
+        Text(user.email ?? '', textAlign: TextAlign.center),
+        SizedBox(height: 8),
         BlocConsumer<FirebaseSyncBloc, FirebaseSyncState>(
           bloc: fbc,
           listener: (context, state) {
@@ -35,7 +35,7 @@ class UserPage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is FirebaseSyncError || state is FirebaseSyncInitial || state is FirebaseSyncReady) {
-              return _getControls(fbc);
+              return _getControls(context, fbc);
             } else
               return SpinnyThing();
           },
@@ -44,23 +44,52 @@ class UserPage extends StatelessWidget {
     );
   }
 
-  Column _getControls(FirebaseSyncBloc fbc) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+  Widget _getControls(BuildContext context, FirebaseSyncBloc fbc) {
+    return ListView(
+      shrinkWrap: true,
       children: [
-        TextButton.icon(
-          onPressed: () {
+        Divider(),
+        ListTile(
+          onTap: () {
             fbc.add(SyncPlaces(user));
           },
-          label: Text('Sync data'),
-          icon: Icon(Icons.sync),
+          title: Text('Sync data'),
+          leading: Icon(
+            Icons.sync,
+            color: Colors.black,
+          ),
         ),
-        SizedBox(height: 16),
-        TextButton.icon(
-          onPressed: signOut,
-          label: Text('Sign out'),
-          icon: Icon(Icons.logout_rounded),
+        Divider(),
+        ListTile(
+          onTap: () => showModalBottomSheet<void>(context: context, builder: (_) => ConfirmationModalSheet(title: 'Sign out?', onConfirm: signOut)),
+          title: Text('Sign out'),
+          leading: Icon(
+            Icons.logout_rounded,
+            color: Colors.red,
+          ),
         ),
+        Divider(),
+        Text('Danger zone:', textAlign: TextAlign.center),
+        Divider(),
+        ListTile(
+          onTap: () => showModalBottomSheet<void>(
+              context: context,
+              builder: (_) => ConfirmationModalSheet(
+                  title: 'Wipe all data saved in cloud?',
+                  descroption: 'This will not delete saved places from your device.\nBut data saved in cloud will be deleted permanently.',
+                  onConfirm: () async {
+                    wipeData(fbc);
+                  })),
+          title: Text(
+            'Wipe data, and delete account',
+            style: TextStyle(color: Colors.red),
+          ),
+          leading: Icon(
+            Icons.delete_sweep_outlined,
+            color: Colors.red,
+          ),
+        ),
+        Divider(),
       ],
     );
   }
@@ -70,17 +99,19 @@ class UserPage extends StatelessWidget {
     stateSetterCallback(false);
   }
 
+  Future<void> wipeData(FirebaseSyncBloc fbc) async {
+    fbc.add(WipeData(user));
+    stateSetterCallback(false);
+  }
+
   // -1 == fail
   // 0 == info
   // 1 == success
   void _showMessage(BuildContext context, int messageType, {String message = ''}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Container(
-          color: Colors.grey.shade300,
-          child: Row(
-            children: [_getMessageIcon(messageType), Text(_getMessageText(messageType))],
-          ),
+        content: Row(
+          children: [_getMessageIcon(messageType), SizedBox(width: 16), Text(_getMessageText(messageType))],
         ),
       ),
     );

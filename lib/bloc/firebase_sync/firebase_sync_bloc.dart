@@ -18,6 +18,7 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
 
   FirebaseSyncBloc(this._placesRepository, this._firebasePlacesRepository) : super(FirebaseSyncInitial()) {
     on<SyncPlaces>(_syncPlaces);
+    on<WipeData>(_wipeData);
   }
 
   Future<void> _syncPlaces(SyncPlaces event, Emitter<FirebaseSyncState> emit) async {
@@ -27,10 +28,8 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
     List<Place> localPlaces = await _placesRepository.getPlaces();
     final List<Place> firebasePlaces = await _firebasePlacesRepository.getPlaces();
 
-    debugPrint(localPlaces.length.toString());
-    debugPrint(firebasePlaces.length.toString());
     for (Place fp in firebasePlaces) {
-      if (localPlaces.where((element) => element.name == fp.name).length == 0) {
+      if (!localPlaces.contains(fp)) {
         debugPrint('${fp.name} was not on local dataset... Adding');
         await _placesRepository.addPlace(fp);
         localPlaces.add(fp);
@@ -40,14 +39,27 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
     final data = jsonEncode(localPlaces);
 
     try {
-      CollectionReference userPlaces = FirebaseFirestore.instance.collection('users_places');
+      CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);
       await userPlaces.doc(event.user.uid).set({'list': data}, SetOptions(merge: true));
     } on Exception {
       emit(FirebaseSyncError());
       return;
     }
 
-    // FirebaseFirestore.instance.collection('userdata').doc(user.uid).set(data)
+    emit(FirebaseSyncReady());
+  }
+
+  Future<void> _wipeData(WipeData event, Emitter<FirebaseSyncState> emit) async {
+    debugPrint('Sync places called');
+    emit(FirebaseSyncProgress());
+    try {
+      CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);
+      await userPlaces.doc(event.user.uid).delete();
+      await event.user.delete();
+    } on Exception {
+      emit(FirebaseSyncError());
+      return;
+    }
     emit(FirebaseSyncReady());
   }
 }
