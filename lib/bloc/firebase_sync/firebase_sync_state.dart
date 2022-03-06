@@ -9,4 +9,8 @@ class FirebaseSyncProgress extends FirebaseSyncState {}
 
 class FirebaseSyncReady extends FirebaseSyncState {}
 
-class FirebaseSyncError extends FirebaseSyncState {}
+class FirebaseSyncError extends FirebaseSyncState {
+  final String message;
+
+  FirebaseSyncError({this.message = ''});
+}

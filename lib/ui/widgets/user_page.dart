@@ -28,7 +28,7 @@ class UserPage extends StatelessWidget {
           bloc: fbc,
           listener: (context, state) {
             if (state is FirebaseSyncError) {
-              _showMessage(context, -1);
+              _showMessage(context, -1, message: state.message);
             } else if (state is FirebaseSyncReady) {
               _showMessage(context, 1);
             }
@@ -65,7 +65,7 @@ class UserPage extends StatelessWidget {
           title: Text('Sign out'),
           leading: Icon(
             Icons.logout_rounded,
-            color: Colors.red,
+            color: Colors.black,
           ),
         ),
         Divider(),
@@ -111,7 +111,16 @@ class UserPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
-          children: [_getMessageIcon(messageType), SizedBox(width: 16), Text(_getMessageText(messageType))],
+          children: [
+            _getMessageIcon(messageType),
+            SizedBox(width: 16),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(message.isEmpty ? _getMessageText(messageType) : message),
+              ),
+            ),
+          ],
         ),
       ),
     );

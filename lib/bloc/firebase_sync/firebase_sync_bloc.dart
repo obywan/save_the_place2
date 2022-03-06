@@ -41,8 +41,8 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
     try {
       CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);
       await userPlaces.doc(event.user.uid).set({'list': data}, SetOptions(merge: true));
-    } on Exception {
-      emit(FirebaseSyncError());
+    } on FirebaseException catch (e) {
+      emit(FirebaseSyncError(message: e.message ?? ''));
       return;
     }
 
@@ -56,8 +56,8 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
       CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);
       await userPlaces.doc(event.user.uid).delete();
       await event.user.delete();
-    } on Exception {
-      emit(FirebaseSyncError());
+    } on FirebaseException catch (e) {
+      emit(FirebaseSyncError(message: e.message == null ? '' : e.message!.replaceAll('. ', '.\n')));
       return;
     }
     emit(FirebaseSyncReady());
