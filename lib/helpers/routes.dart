@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../ui/screens/auth_screen.dart';
 
+import '../ui/screens/auth_screen.dart';
 import '../ui/screens/place_add_screen.dart';
 import '../ui/screens/place_details_screen.dart';
 import '../ui/screens/place_direction_screen.dart';

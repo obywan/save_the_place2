@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:save_the_place/ui/widgets/spinny_thing.dart';
+import '../widgets/spinny_thing.dart';
 
 import '../widgets/sign_in_page.dart';
 import '../widgets/user_page.dart';

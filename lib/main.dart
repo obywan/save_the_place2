@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'bloc/firebase_sync/firebase_sync_bloc.dart';
-import 'data/repositories/firebase_places_repository.dart';
 
+import 'bloc/firebase_sync/firebase_sync_bloc.dart';
 import 'bloc/places/places_bloc.dart';
+import 'data/repositories/firebase_places_repository.dart';
 import 'data/repositories/local_places_repository.dart';
 import 'helpers/routes.dart';
 import 'localization/localizations.dart';
