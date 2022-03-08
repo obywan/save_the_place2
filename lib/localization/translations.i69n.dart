@@ -5,16 +5,39 @@ import 'package:i69n/i69n.dart' as i69n;
 String get _languageCode => 'en';
 String get _localeName => 'en';
 
-String _plural(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.plural(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
-String _ordinal(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.ordinal(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
-String _cardinal(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.cardinal(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _plural(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.plural(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _ordinal(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.ordinal(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _cardinal(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.cardinal(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
 
 class Translations implements i69n.I69nMessageBundle {
   const Translations();
   PageTitlesTranslations get pageTitles => PageTitlesTranslations(this);
+  PermissionMessagesTranslations get permissionMessages =>
+      PermissionMessagesTranslations(this);
   MessagesTranslations get messages => MessagesTranslations(this);
   DialogsTranslations get dialogs => DialogsTranslations(this);
   GeneralTranslations get general => GeneralTranslations(this);
@@ -22,11 +45,14 @@ class Translations implements i69n.I69nMessageBundle {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'pageTitles':
         return pageTitles;
+      case 'permissionMessages':
+        return permissionMessages;
       case 'messages':
         return messages;
       case 'dialogs':
@@ -46,11 +72,14 @@ class PageTitlesTranslations implements i69n.I69nMessageBundle {
   const PageTitlesTranslations(this._parent);
   String get homePageTitle => "Home page";
   String get addNewPageTitle => "Add new place";
-  String get compassPageTitle => "Compass";
+  String get compassPageTitle => "Add new place";
+  String get accountPageTitle => "Account";
+  String get settingsPageTitle => "Settings";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'homePageTitle':
@@ -59,6 +88,33 @@ class PageTitlesTranslations implements i69n.I69nMessageBundle {
         return addNewPageTitle;
       case 'compassPageTitle':
         return compassPageTitle;
+      case 'accountPageTitle':
+        return accountPageTitle;
+      case 'settingsPageTitle':
+        return settingsPageTitle;
+      default:
+        return key;
+    }
+  }
+}
+
+class PermissionMessagesTranslations implements i69n.I69nMessageBundle {
+  final Translations _parent;
+  const PermissionMessagesTranslations(this._parent);
+  String get locationPermissionNeeded =>
+      "We need location permission to proceed";
+  String get locationShouldBeEnabled => "We need location enabled to proceed";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'locationPermissionNeeded':
+        return locationPermissionNeeded;
+      case 'locationShouldBeEnabled':
+        return locationShouldBeEnabled;
       default:
         return key;
     }
@@ -73,7 +129,8 @@ class MessagesTranslations implements i69n.I69nMessageBundle {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'errorMessage':
@@ -96,7 +153,8 @@ class DialogsTranslations implements i69n.I69nMessageBundle {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'deleteTite':
@@ -125,7 +183,8 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'noItemsInList':
@@ -158,7 +217,8 @@ class NewPlaceFormTranslations implements i69n.I69nMessageBundle {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'lat':

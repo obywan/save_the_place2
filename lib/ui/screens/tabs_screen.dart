@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helpers/permission_helper.dart';
+import '../../localization/translations.i69n.dart';
 import '../widgets/spinny_thing.dart';
 import '../tabs/settings_screen.dart';
 
@@ -33,7 +34,7 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  Widget _getChild() {
+  Widget _getChild(Translations translations) {
     return FutureBuilder<LocationPermissionStatus>(
         builder: (_, snapshot) {
           if (snapshot.hasData) {
@@ -41,11 +42,11 @@ class _TabsScreenState extends State<TabsScreen> {
               case LocationPermissionStatus.Alright:
                 return _getTab();
               case LocationPermissionStatus.Denied:
-                return Text('We need location permission to proceed');
+                return Text(translations.permissionMessages.locationPermissionNeeded);
               case LocationPermissionStatus.DeniedForever:
-                return Text('We need location permission to proceed');
+                return Text(translations.permissionMessages.locationPermissionNeeded);
               case LocationPermissionStatus.NotEnabled:
-                return Text('We need location enabled to proceed');
+                return Text(translations.permissionMessages.locationShouldBeEnabled);
               case null:
                 return Text('This was not supposed to happen');
             }
@@ -63,7 +64,7 @@ class _TabsScreenState extends State<TabsScreen> {
       case 1:
         return translations.pageTitles.compassPageTitle;
       case 2:
-        return 'Settings';
+        return translations.pageTitles.settingsPageTitle;
 
       default:
         return 'Noooooo';
@@ -82,13 +83,14 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final translations = CustomLocalizations.of(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(_getTabName()),
         ),
-        body: _getChild(),
+        body: _getChild(translations),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             _getNavBarItem('Saved', Icons.list),

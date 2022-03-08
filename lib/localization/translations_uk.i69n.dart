@@ -1,34 +1,60 @@
 // ignore_for_file: unused_element, unused_field, camel_case_types, annotate_overrides, prefer_single_quotes
 // GENERATED FILE, do not edit!
 import 'package:i69n/i69n.dart' as i69n;
-
 import 'translations.i69n.dart';
 
 String get _languageCode => 'uk';
 String get _localeName => 'uk';
 
-String _plural(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.plural(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
-String _ordinal(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.ordinal(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
-String _cardinal(int count, {String? zero, String? one, String? two, String? few, String? many, String? other}) =>
-    i69n.cardinal(count, _languageCode, zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _plural(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.plural(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _ordinal(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.ordinal(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
+String _cardinal(int count,
+        {String? zero,
+        String? one,
+        String? two,
+        String? few,
+        String? many,
+        String? other}) =>
+    i69n.cardinal(count, _languageCode,
+        zero: zero, one: one, two: two, few: few, many: many, other: other);
 
 class Translations_uk extends Translations {
   const Translations_uk();
   PageTitlesTranslations_uk get pageTitles => PageTitlesTranslations_uk(this);
+  PermissionMessagesTranslations_uk get permissionMessages =>
+      PermissionMessagesTranslations_uk(this);
   MessagesTranslations_uk get messages => MessagesTranslations_uk(this);
   DialogsTranslations_uk get dialogs => DialogsTranslations_uk(this);
   GeneralTranslations_uk get general => GeneralTranslations_uk(this);
-  NewPlaceFormTranslations_uk get newPlaceForm => NewPlaceFormTranslations_uk(this);
+  NewPlaceFormTranslations_uk get newPlaceForm =>
+      NewPlaceFormTranslations_uk(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'pageTitles':
         return pageTitles;
+      case 'permissionMessages':
+        return permissionMessages;
       case 'messages':
         return messages;
       case 'dialogs':
@@ -49,10 +75,13 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
   String get homePageTitle => "Домашня сторінка";
   String get addNewPageTitle => "Додати локацію";
   String get compassPageTitle => "Компас";
+  String get accountPageTitle => "Обліковий запис";
+  String get settingsPageTitle => "Налаштування";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'homePageTitle':
@@ -61,6 +90,34 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
         return addNewPageTitle;
       case 'compassPageTitle':
         return compassPageTitle;
+      case 'accountPageTitle':
+        return accountPageTitle;
+      case 'settingsPageTitle':
+        return settingsPageTitle;
+      default:
+        return super[key];
+    }
+  }
+}
+
+class PermissionMessagesTranslations_uk extends PermissionMessagesTranslations {
+  final Translations_uk _parent;
+  const PermissionMessagesTranslations_uk(this._parent) : super(_parent);
+  String get locationPermissionNeeded =>
+      "Потрібен дозвіл використовувати геолокацію";
+  String get locationShouldBeEnabled =>
+      "Потрібно, щоб геолокація була ввімкнутою";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'locationPermissionNeeded':
+        return locationPermissionNeeded;
+      case 'locationShouldBeEnabled':
+        return locationShouldBeEnabled;
       default:
         return super[key];
     }
@@ -75,7 +132,8 @@ class MessagesTranslations_uk extends MessagesTranslations {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'errorMessage':
@@ -98,7 +156,8 @@ class DialogsTranslations_uk extends DialogsTranslations {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'deleteTite':
@@ -127,7 +186,8 @@ class GeneralTranslations_uk extends GeneralTranslations {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'noItemsInList':
@@ -160,7 +220,8 @@ class NewPlaceFormTranslations_uk extends NewPlaceFormTranslations {
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
-      return (this[key.substring(0, index)] as i69n.I69nMessageBundle)[key.substring(index + 1)];
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
     }
     switch (key) {
       case 'lat':

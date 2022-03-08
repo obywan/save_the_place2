@@ -22,7 +22,6 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
   }
 
   Future<void> _syncPlaces(SyncPlaces event, Emitter<FirebaseSyncState> emit) async {
-    debugPrint('Sync places called');
     emit(FirebaseSyncProgress());
 
     List<Place> localPlaces = await _placesRepository.getPlaces();
@@ -30,7 +29,6 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
 
     for (Place fp in firebasePlaces) {
       if (!localPlaces.contains(fp)) {
-        debugPrint('${fp.name} was not on local dataset... Adding');
         await _placesRepository.addPlace(fp);
         localPlaces.add(fp);
       }
@@ -50,7 +48,6 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
   }
 
   Future<void> _wipeData(WipeData event, Emitter<FirebaseSyncState> emit) async {
-    debugPrint('Sync places called');
     emit(FirebaseSyncProgress());
     try {
       CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);

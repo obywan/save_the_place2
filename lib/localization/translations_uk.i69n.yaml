@@ -2,6 +2,11 @@ pageTitles:
   homePageTitle: Домашня сторінка
   addNewPageTitle: Додати локацію
   compassPageTitle: Компас
+  accountPageTitle: Обліковий запис
+  settingsPageTitle: Налаштування
+permissionMessages:
+  locationPermissionNeeded: Потрібен дозвіл використовувати геолокацію
+  locationShouldBeEnabled: Потрібно, щоб геолокація була ввімкнутою
 messages:
   errorMessage: Хммм, щось не так =/
   copied: скопійовано

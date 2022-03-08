@@ -2,6 +2,11 @@ pageTitles:
   homePageTitle: Home page
   addNewPageTitle: Add new place
   compassPageTitle: Add new place
+  accountPageTitle: Account
+  settingsPageTitle: Settings
+permissionMessages:
+  locationPermissionNeeded: We need location permission to proceed
+  locationShouldBeEnabled: We need location enabled to proceed
 messages:
   errorMessage: Hmmm, something wrong =/
   copied: copied

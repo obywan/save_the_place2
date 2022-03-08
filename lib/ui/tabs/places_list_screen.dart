@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../helpers/http_helper.dart';
 
 import '../../bloc/places/places_bloc.dart';
+import '../screens/place_add_screen.dart';
 import '../widgets/current_location_row.dart';
 import '../widgets/places_list.dart';
-import '../screens/place_add_screen.dart';
 
 class LocationsListScreen extends StatelessWidget {
   static const String route = '/places_list_screen';

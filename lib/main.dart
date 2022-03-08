@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<FirebaseSyncBloc>(create: (context) => FirebaseSyncBloc(lpr, fpr), lazy: false),
       ],
       child: MaterialApp(
-        title: 'SaveThePlace',
+        title: 'PointMe',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

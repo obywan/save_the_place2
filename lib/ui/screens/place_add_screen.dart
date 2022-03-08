@@ -10,7 +10,6 @@ class PlaceAddScreen extends StatelessWidget {
   }
 
   void _onError(BuildContext context, String errorMessage) {
-    debugPrint('error');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
   }
 
