@@ -17,18 +17,18 @@ class CurrentLocationRow extends StatelessWidget {
     return StreamBuilder<Position>(
       stream: _positionStream,
       builder: (_, positionSnapshot) {
-        // debugPrint('${positionSnapshot.connectionState} ---- ${positionSnapshot.data}');
         if (positionSnapshot.connectionState == ConnectionState.active && positionSnapshot.data != null) {
-          final coords = '${positionSnapshot.data?.latitude.toStringAsFixed(5)}, ${positionSnapshot.data?.longitude.toStringAsFixed(5)}';
-          return _getContainer(context, coords, Colors.green.shade100);
+          // debugPrint(positionSnapshot.data.accuracy);
+          final coords = '${positionSnapshot.data!.latitude.toStringAsFixed(5)}, ${positionSnapshot.data!.longitude.toStringAsFixed(5)}';
+          return _getContainer(context, coords, positionSnapshot.data?.accuracy, Colors.green.shade100);
         } else {
-          return _getContainer(context, '', Colors.orange.shade100);
+          return _getContainer(context, '', 0, Colors.orange.shade100);
         }
       },
     );
   }
 
-  Widget _getContainer(BuildContext context, String coordinates, Color color) {
+  Widget _getContainer(BuildContext context, String coordinates, double? accuracy, Color color) {
     final translations = CustomLocalizations.of(context);
     return InkWell(
       onTap: () {
@@ -57,7 +57,7 @@ class CurrentLocationRow extends StatelessWidget {
                     //       style: TextStyle(fontSize: 10, color: Colors.grey),
                     //     ),
                     Text(
-                      coordinates,
+                      '$coordinates (acc: ${accuracy?.toStringAsFixed(0)}m)',
                       style: TextStyle(fontSize: 16),
                     ),
                     //   ],
