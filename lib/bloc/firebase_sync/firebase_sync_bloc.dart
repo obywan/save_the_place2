@@ -38,7 +38,7 @@ class FirebaseSyncBloc extends Bloc<FirebaseSyncEvent, FirebaseSyncState> {
 
     try {
       CollectionReference userPlaces = FirebaseFirestore.instance.collection(FirebasePlacesRepository.user_places_collection);
-      await userPlaces.doc(event.user.uid).set({'list': data}, SetOptions(merge: true));
+      await userPlaces.doc(event.user.uid).set({'list': data});
     } on FirebaseException catch (e) {
       emit(FirebaseSyncError(message: e.message ?? ''));
       return;

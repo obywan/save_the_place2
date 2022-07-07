@@ -34,6 +34,7 @@ class FirebasePlacesRepository extends PlacesRepository {
     }
 
     try {
+      debugPrint('Obtaining firebase places');
       final documentSnapshot = await FirebaseFirestore.instance.collection(user_places_collection).doc(user.uid).get();
       if (documentSnapshot.data() == null) return [];
       final Iterable json = jsonDecode(documentSnapshot.data()!['list']);

@@ -30,7 +30,7 @@ class LocalPlacesRepository extends PlacesRepository {
     // if (!_initialLoadIsDone) {
     await _initLoad();
     // }
-    return places;
+    return [...places];
   }
 
   Future<void> _initLoad() async {

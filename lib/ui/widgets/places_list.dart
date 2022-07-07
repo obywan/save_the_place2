@@ -16,7 +16,9 @@ class PlacesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final translations = CustomLocalizations.of(context);
     return RefreshIndicator(
-      onRefresh: () => _refreshList(context),
+      onRefresh: () async {
+        BlocProvider.of<PlacesBloc>(context, listen: false).add(GetPlaces());
+      },
       child: BlocBuilder<PlacesBloc, PlacesState>(
         builder: (context, state) {
           if (state is PlacesLoading || state is PlacesAdded) return _getLoading();
@@ -38,7 +40,7 @@ class PlacesList extends StatelessWidget {
   }
 
   Widget _getList(BuildContext context, List<Place> places, Translations translations) {
-    debugPrint(jsonEncode(places));
+    debugPrint('_getListCalled' + jsonEncode(places));
     if (places.length == 0)
       return Text(translations.general.noItemsInList);
     else

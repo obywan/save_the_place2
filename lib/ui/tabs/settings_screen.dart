@@ -11,6 +11,7 @@ class SettingsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ListTile(
+            leading: Icon(Icons.account_circle_outlined),
             title: Text('Account'),
             onTap: () => Navigator.of(context).pushNamed(AuthScreen.route),
           ),
