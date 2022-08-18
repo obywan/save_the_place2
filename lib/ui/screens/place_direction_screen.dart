@@ -52,6 +52,7 @@ class PlaceDirectionScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Text('${translations.general.distance}: ${distance.getReadableDistance()}'),
+                          Align(alignment: Alignment(0, 0.1), child: Text('Target bearing: ${bearing.toStringAsPrecision(2)}')),
                           Compass(bearing: bearing),
                         ],
                       ),

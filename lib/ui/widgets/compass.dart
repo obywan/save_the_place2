@@ -79,8 +79,9 @@ class _CompassState extends State<Compass> {
     // debugPrint('$north');
     return Stack(
       children: [
+        Align(alignment: Alignment(0, -0.1), child: Text('Bearing ${(_absoluteOrientation2.x * 180 / pi).toStringAsPrecision(2)}')),
         Center(
-          child: getAnimatedWidget(north / pi / 2, 'assets/svg/compass.svg'),
+          child: getAnimatedWidget(north / pi / 2, 'assets/svg/compass_2.svg'),
         ),
         if (widget.bearing < double.maxFinite)
           Center(
