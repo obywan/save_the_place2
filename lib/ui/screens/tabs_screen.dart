@@ -93,9 +93,9 @@ class _TabsScreenState extends State<TabsScreen> {
         body: _getChild(translations),
         bottomNavigationBar: BottomNavigationBar(
           items: [
-            _getNavBarItem('Saved', Icons.list),
-            _getNavBarItem('Compass', Icons.compass_calibration),
-            _getNavBarItem('Settings', Icons.settings),
+            _getNavBarItem(translations.tabsTitles.saved, Icons.list),
+            _getNavBarItem(translations.tabsTitles.compass, Icons.compass_calibration),
+            _getNavBarItem(translations.tabsTitles.settings, Icons.settings),
           ],
           onTap: _selectTab,
           currentIndex: _selectedTab,

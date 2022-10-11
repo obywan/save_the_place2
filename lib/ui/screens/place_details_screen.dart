@@ -20,17 +20,6 @@ class PlaceDetailsScreen extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.description_outlined),
-                  SizedBox(width: 8),
-                  Text(place.description),
-                ],
-              ),
-              color: Colors.green.shade300,
-            ),
-            DetailsTextRow(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
                   Icon(Icons.location_on_outlined),
                   SizedBox(width: 8),
                   Text('${place.location.latitude}, ${place.location.longitude}'),
@@ -48,6 +37,10 @@ class PlaceDetailsScreen extends StatelessWidget {
                 ],
               ),
               color: Colors.green.shade100,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(place.description),
             ),
             _getImage(place.imagePath, context)
           ],

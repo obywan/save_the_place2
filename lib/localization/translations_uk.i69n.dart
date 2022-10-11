@@ -37,11 +37,13 @@ String _cardinal(int count,
 class Translations_uk extends Translations {
   const Translations_uk();
   PageTitlesTranslations_uk get pageTitles => PageTitlesTranslations_uk(this);
+  TabsTitlesTranslations_uk get tabsTitles => TabsTitlesTranslations_uk(this);
   PermissionMessagesTranslations_uk get permissionMessages =>
       PermissionMessagesTranslations_uk(this);
   MessagesTranslations_uk get messages => MessagesTranslations_uk(this);
   DialogsTranslations_uk get dialogs => DialogsTranslations_uk(this);
   GeneralTranslations_uk get general => GeneralTranslations_uk(this);
+  SettingsTranslations_uk get settings => SettingsTranslations_uk(this);
   NewPlaceFormTranslations_uk get newPlaceForm =>
       NewPlaceFormTranslations_uk(this);
   Object operator [](String key) {
@@ -53,6 +55,8 @@ class Translations_uk extends Translations {
     switch (key) {
       case 'pageTitles':
         return pageTitles;
+      case 'tabsTitles':
+        return tabsTitles;
       case 'permissionMessages':
         return permissionMessages;
       case 'messages':
@@ -61,6 +65,8 @@ class Translations_uk extends Translations {
         return dialogs;
       case 'general':
         return general;
+      case 'settings':
+        return settings;
       case 'newPlaceForm':
         return newPlaceForm;
       default:
@@ -94,6 +100,31 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
         return accountPageTitle;
       case 'settingsPageTitle':
         return settingsPageTitle;
+      default:
+        return super[key];
+    }
+  }
+}
+
+class TabsTitlesTranslations_uk extends TabsTitlesTranslations {
+  final Translations_uk _parent;
+  const TabsTitlesTranslations_uk(this._parent) : super(_parent);
+  String get saved => "Збережені";
+  String get compass => "Компас";
+  String get settings => "Налаштування";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'saved':
+        return saved;
+      case 'compass':
+        return compass;
+      case 'settings':
+        return settings;
       default:
         return super[key];
     }
@@ -179,6 +210,7 @@ class GeneralTranslations_uk extends GeneralTranslations {
   const GeneralTranslations_uk(this._parent) : super(_parent);
   String get noItemsInList => "Список збережених локацій буде тут";
   String get distance => "Відстань";
+  String get bearing => "Азимут";
   String get waitingForLocation => "Визначаємо координати...";
   String get currentLocation => "Поточні координати";
   String get addImage => "Додати зображення";
@@ -194,6 +226,8 @@ class GeneralTranslations_uk extends GeneralTranslations {
         return noItemsInList;
       case 'distance':
         return distance;
+      case 'bearing':
+        return bearing;
       case 'waitingForLocation':
         return waitingForLocation;
       case 'currentLocation':
@@ -208,13 +242,35 @@ class GeneralTranslations_uk extends GeneralTranslations {
   }
 }
 
+class SettingsTranslations_uk extends SettingsTranslations {
+  final Translations_uk _parent;
+  const SettingsTranslations_uk(this._parent) : super(_parent);
+  String get account => "Профіль";
+  String get language => "Мова";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'account':
+        return account;
+      case 'language':
+        return language;
+      default:
+        return super[key];
+    }
+  }
+}
+
 class NewPlaceFormTranslations_uk extends NewPlaceFormTranslations {
   final Translations_uk _parent;
   const NewPlaceFormTranslations_uk(this._parent) : super(_parent);
   String get lat => "Широта";
   String get lon => "Довгота";
   String get elev => "Висота";
-  String get name => "Ім'я";
+  String get name => "Назва";
   String get description => "Опис";
   String get required => "(обов'язково)";
   Object operator [](String key) {

@@ -78,6 +78,8 @@ flutter:
     - assets/svg/arrow.svg
     - assets/svg/location_pin.svg
     - assets/svg/copy.svg
+    - assets/svg/en.svg
+    - assets/svg/uk.svg
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

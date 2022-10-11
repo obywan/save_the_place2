@@ -36,11 +36,13 @@ String _cardinal(int count,
 class Translations implements i69n.I69nMessageBundle {
   const Translations();
   PageTitlesTranslations get pageTitles => PageTitlesTranslations(this);
+  TabsTitlesTranslations get tabsTitles => TabsTitlesTranslations(this);
   PermissionMessagesTranslations get permissionMessages =>
       PermissionMessagesTranslations(this);
   MessagesTranslations get messages => MessagesTranslations(this);
   DialogsTranslations get dialogs => DialogsTranslations(this);
   GeneralTranslations get general => GeneralTranslations(this);
+  SettingsTranslations get settings => SettingsTranslations(this);
   NewPlaceFormTranslations get newPlaceForm => NewPlaceFormTranslations(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
@@ -51,6 +53,8 @@ class Translations implements i69n.I69nMessageBundle {
     switch (key) {
       case 'pageTitles':
         return pageTitles;
+      case 'tabsTitles':
+        return tabsTitles;
       case 'permissionMessages':
         return permissionMessages;
       case 'messages':
@@ -59,6 +63,8 @@ class Translations implements i69n.I69nMessageBundle {
         return dialogs;
       case 'general':
         return general;
+      case 'settings':
+        return settings;
       case 'newPlaceForm':
         return newPlaceForm;
       default:
@@ -72,7 +78,7 @@ class PageTitlesTranslations implements i69n.I69nMessageBundle {
   const PageTitlesTranslations(this._parent);
   String get homePageTitle => "Home page";
   String get addNewPageTitle => "Add new place";
-  String get compassPageTitle => "Add new place";
+  String get compassPageTitle => "Compass";
   String get accountPageTitle => "Account";
   String get settingsPageTitle => "Settings";
   Object operator [](String key) {
@@ -92,6 +98,31 @@ class PageTitlesTranslations implements i69n.I69nMessageBundle {
         return accountPageTitle;
       case 'settingsPageTitle':
         return settingsPageTitle;
+      default:
+        return key;
+    }
+  }
+}
+
+class TabsTitlesTranslations implements i69n.I69nMessageBundle {
+  final Translations _parent;
+  const TabsTitlesTranslations(this._parent);
+  String get saved => "Saved";
+  String get compass => "Compass";
+  String get settings => "Settings";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'saved':
+        return saved;
+      case 'compass':
+        return compass;
+      case 'settings':
+        return settings;
       default:
         return key;
     }
@@ -125,7 +156,7 @@ class MessagesTranslations implements i69n.I69nMessageBundle {
   final Translations _parent;
   const MessagesTranslations(this._parent);
   String get errorMessage => "Hmmm, something wrong =/";
-  String get copied => "copied";
+  String get copied => "Copied";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -175,9 +206,10 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
   final Translations _parent;
   const GeneralTranslations(this._parent);
   String get noItemsInList => "Locations list will be here";
-  String get distance => "distance";
+  String get distance => "Distance";
+  String get bearing => "Bearing";
   String get waitingForLocation => "Waiting for current location...";
-  String get currentLocation => "current location";
+  String get currentLocation => "Current location";
   String get addImage => "Add image";
   String get save => "Save";
   Object operator [](String key) {
@@ -191,6 +223,8 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
         return noItemsInList;
       case 'distance':
         return distance;
+      case 'bearing':
+        return bearing;
       case 'waitingForLocation':
         return waitingForLocation;
       case 'currentLocation':
@@ -199,6 +233,28 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
         return addImage;
       case 'save':
         return save;
+      default:
+        return key;
+    }
+  }
+}
+
+class SettingsTranslations implements i69n.I69nMessageBundle {
+  final Translations _parent;
+  const SettingsTranslations(this._parent);
+  String get account => "Account";
+  String get language => "Language";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'account':
+        return account;
+      case 'language':
+        return language;
       default:
         return key;
     }

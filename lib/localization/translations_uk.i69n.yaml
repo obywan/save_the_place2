@@ -4,6 +4,10 @@ pageTitles:
   compassPageTitle: Компас
   accountPageTitle: Обліковий запис
   settingsPageTitle: Налаштування
+tabsTitles:
+  saved: Збережені
+  compass: Компас
+  settings: Налаштування
 permissionMessages:
   locationPermissionNeeded: Потрібен дозвіл використовувати геолокацію
   locationShouldBeEnabled: Потрібно, щоб геолокація була ввімкнутою
@@ -18,14 +22,18 @@ dialogs:
 general:
   noItemsInList: Список збережених локацій буде тут
   distance: Відстань
+  bearing: Азимут
   waitingForLocation: Визначаємо координати...
   currentLocation: Поточні координати
   addImage: Додати зображення
   save: Зберегти
+settings:
+  account: Профіль
+  language: Мова
 newPlaceForm:
   lat: Широта
   lon: Довгота
   elev: Висота
-  name: Ім'я
+  name: Назва
   description: Опис
   required: (обов'язково)

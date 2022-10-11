@@ -1,15 +1,19 @@
 pageTitles:
   homePageTitle: Home page
   addNewPageTitle: Add new place
-  compassPageTitle: Add new place
+  compassPageTitle: Compass
   accountPageTitle: Account
   settingsPageTitle: Settings
+tabsTitles:
+  saved: Saved
+  compass: Compass
+  settings: Settings
 permissionMessages:
   locationPermissionNeeded: We need location permission to proceed
   locationShouldBeEnabled: We need location enabled to proceed
 messages:
   errorMessage: Hmmm, something wrong =/
-  copied: copied
+  copied: Copied
 dialogs:
   deleteTite: Delete place
   areYouSureText: Are you sure?
@@ -17,11 +21,15 @@ dialogs:
   negativeAnswer: Nope
 general:
   noItemsInList: Locations list will be here
-  distance: distance
+  distance: Distance
+  bearing: Bearing
   waitingForLocation: Waiting for current location...
-  currentLocation: current location
+  currentLocation: Current location
   addImage: Add image
   save: Save
+settings:
+  account: Account
+  language: Language
 newPlaceForm:
   lat: Latitude
   lon: Longitude
