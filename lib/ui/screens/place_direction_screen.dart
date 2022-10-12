@@ -35,14 +35,12 @@ class PlaceDirectionScreen extends StatelessWidget {
                 final bearing = currentLocation.getBearing(place);
                 final distance =
                     Geolocator.distanceBetween(currentLocation.latitude, currentLocation.longitude, place.location.latitude, place.location.longitude);
-                return Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Align(alignment: Alignment.center, child: Text('${translations.general.distance}: ${distance.getReadableDistance()}')),
-                      Compass(bearing: bearing),
-                    ],
-                  ),
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(alignment: Alignment.center, child: Text('${translations.general.distance}: ${distance.getReadableDistance()}')),
+                    Compass(bearing: bearing),
+                  ],
                 );
               } else
                 return Text(translations.general.waitingForLocation);

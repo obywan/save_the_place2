@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:save_the_place/helpers/app_settings.dart';
 import 'package:save_the_place/localization/localizations.dart';
+import 'package:save_the_place/ui/widgets/app_builder.dart';
 
 class LangSelection extends StatelessWidget {
   const LangSelection({Key? key}) : super(key: key);
@@ -21,6 +23,17 @@ class LangSelection extends StatelessWidget {
               child: SvgPicture.asset('assets/svg/${locales[index].languageCode}.svg'),
             ),
           ),
+          onTap: () async {
+            await AppSettings.setSelectedLanguageCode(locales[index].languageCode);
+            CustomLocalizations.load(locales[index]);
+            final appBuilder = AppBuilder.of(context);
+            if (appBuilder == null) {
+              debugPrint('appBuilder == null');
+            } else {
+              appBuilder.rebuild();
+            }
+            Navigator.of(context).pop();
+          },
         );
       },
       itemCount: locales.length,
