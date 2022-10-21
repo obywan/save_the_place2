@@ -63,4 +63,10 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
       emit(PlacesError(e.toString()));
     }
   }
+
+  Future<void> _onGetTags(GetTags event, Emitter<PlacesState> emit) async {
+    emit(PlacesLoading());
+    final result = _placesRepository.getTags();
+    emit(TagsLoaded(result));
+  }
 }

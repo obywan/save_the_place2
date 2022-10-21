@@ -5,6 +5,8 @@ abstract class PlacesEvent {}
 
 class GetPlaces extends PlacesEvent {}
 
+class GetTags extends PlacesEvent {}
+
 class AddPlace extends PlacesEvent {
   final Place place;
 

@@ -34,10 +34,10 @@ class PlacesList extends StatelessWidget {
     );
   }
 
-  Future<void> _refreshList(BuildContext context) {
-    BlocProvider.of<PlacesBloc>(context, listen: false).add(GetPlaces());
-    return Future(() => {});
-  }
+  // Future<void> _refreshList(BuildContext context) {
+  //   BlocProvider.of<PlacesBloc>(context, listen: false).add(GetPlaces());
+  //   return Future(() => {});
+  // }
 
   Widget _getList(BuildContext context, List<Place> places, Translations translations) {
     debugPrint('_getListCalled' + jsonEncode(places));

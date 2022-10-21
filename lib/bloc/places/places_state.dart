@@ -17,6 +17,12 @@ class PlacesLoaded extends PlacesState {
   PlacesLoaded(this.places);
 }
 
+class TagsLoaded extends PlacesState {
+  final Set<String> tags;
+
+  TagsLoaded(this.tags);
+}
+
 class PlacesError extends PlacesState {
   final String message;
 

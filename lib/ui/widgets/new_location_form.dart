@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:save_the_place/ui/widgets/tags_selector.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/location.dart' as loc;
@@ -44,7 +45,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
       BlocProvider.of<PlacesBloc>(context, listen: false).add(
         AddPlace(
-          Place(loc.Location(latitude: vals[lat], longitude: vals[lon], elevation: vals[alt]), vals[name], vals[desc], vals[path], DateTime.now()),
+          Place(loc.Location(latitude: vals[lat], longitude: vals[lon], elevation: vals[alt]), vals[name], vals[desc], vals[path], DateTime.now(),
+              ['test', 'city']),
         ),
       );
     }
@@ -126,6 +128,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       decoration: InputDecoration(hintText: translations.newPlaceForm.description),
                     ),
                     SizedBox(height: 24),
+                    TagsSelector(),
                     ImageSelector(callback: _setPath),
                   ],
                 ),
