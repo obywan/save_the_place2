@@ -49,15 +49,31 @@ class PlaceDetailsScreen extends StatelessWidget {
               ),
               color: Colors.green.shade100,
             ),
-            Chip(label: Text(place.tags[0])),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(place.description),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Row(
+                children: [
+                  ...place.tags.map(
+                    (e) => _getTagChip(e),
+                  )
+                ],
+              ),
             ),
             _getImage(place.imagePath, context)
           ],
         ),
       ),
+    );
+  }
+
+  Padding _getTagChip(String e) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 6.0),
+      child: Chip(label: Text(e)),
     );
   }
 
