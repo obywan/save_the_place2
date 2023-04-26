@@ -98,7 +98,9 @@ class _CompassState extends State<Compass> {
 
     // final north = newUIRotation;
 
-    final target = newUIRotation + widget.bearing / (180 / pi);
+    // debugPrint('${widget.bearing}');
+
+    final target = newUIRotation + widget.bearing / 360;
     // debugPrint('$newUIRotation');
     return Stack(
       children: [
