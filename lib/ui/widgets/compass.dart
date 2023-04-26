@@ -9,6 +9,7 @@ import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class Compass extends StatefulWidget {
   final double bearing;
+  static const double twoPI = pi * 2;
 
   const Compass({Key? key, this.bearing = double.maxFinite}) : super(key: key);
 
@@ -24,8 +25,8 @@ class _CompassState extends State<Compass> {
   Vector3 _absoluteOrientation2 = Vector3.zero();
 
   List<StreamSubscription> subscriptions = [];
-  double oldXRotation = -10000;
-  double northRotation = 0;
+  double oldDeviceOrientation = double.negativeInfinity;
+  double newUIRotation = 0;
 
   @override
   void initState() {
@@ -43,23 +44,44 @@ class _CompassState extends State<Compass> {
         var matrix = motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
         _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
 
-        final preprocessedRotation = _absoluteOrientation2.x > 0 ? _absoluteOrientation2.x : 6.28 + _absoluteOrientation2.x;
+        //get normalized rotation (0-1 ragne)
+        final preprocessedRotation = (_absoluteOrientation2.x > 0 ? _absoluteOrientation2.x : Compass.twoPI + _absoluteOrientation2.x) / Compass.twoPI;
+        // debugPrint('$preprocessedRotation');
 
-        if (oldXRotation < -1000) oldXRotation = preprocessedRotation;
-        // final radianRotations = (oldXRotation ~/ 6.28) * 6.28;
-        final plusOneDelta = (oldXRotation - (preprocessedRotation + 6.28)).abs();
-        final minusOneDelta = (oldXRotation - (preprocessedRotation - 6.28)).abs();
-        final noChangeDelta = (oldXRotation - preprocessedRotation).abs();
+        //prepare placeholder to remember old rotation
+        if (oldDeviceOrientation < -10000) {
+          oldDeviceOrientation = preprocessedRotation;
+          newUIRotation = preprocessedRotation;
+          return;
+        }
 
-        // debugPrint('$oldXRotation $preprocessedRotation $plusOneDelta $minusOneDelta $noChangeDelta');
+        //find out how much rotation has changed
+        final delta = _getUIDelta(oldDeviceOrientation, preprocessedRotation);
 
-        if (plusOneDelta < minusOneDelta && plusOneDelta < noChangeDelta) northRotation = preprocessedRotation + 6.28;
-        if (minusOneDelta < plusOneDelta && minusOneDelta < noChangeDelta) northRotation = preprocessedRotation - 6.28;
-        if (noChangeDelta < minusOneDelta && noChangeDelta < plusOneDelta) northRotation = preprocessedRotation;
+        // final plusOne = newUIRotation + 1;
 
-        oldXRotation = northRotation;
+        newUIRotation -= delta;
+
+        oldDeviceOrientation = preprocessedRotation;
       });
     }));
+  }
+
+  double _getUIDelta(double ol, double nw) {
+    final plusOne = (ol - nw) + 1;
+    final minusOne = (ol - nw) - 1;
+    final none = ol - nw;
+
+    if (none.abs() < plusOne.abs() && none.abs() < minusOne.abs()) {
+      return none;
+    }
+    if (plusOne.abs() < none.abs() && plusOne.abs() < minusOne.abs()) {
+      return plusOne;
+    }
+    if (minusOne.abs() < plusOne.abs() && minusOne.abs() < none.abs()) {
+      return minusOne;
+    }
+    return 0;
   }
 
   @override
@@ -74,18 +96,19 @@ class _CompassState extends State<Compass> {
   Widget build(BuildContext context) {
     // debugPrint('$oldXRotation $northRotation');
 
-    final north = northRotation;
-    final target = north + widget.bearing / (180 / pi);
-    // debugPrint('$north');
+    // final north = newUIRotation;
+
+    final target = newUIRotation + widget.bearing / (180 / pi);
+    // debugPrint('$newUIRotation');
     return Stack(
       children: [
         if (widget.bearing >= double.maxFinite) Align(alignment: Alignment.center, child: Text('Bearing ${_getRedableBearing()}')),
         Center(
-          child: getAnimatedWidget(north / pi / 2, 'assets/svg/compass_2.svg'),
+          child: getAnimatedWidget(newUIRotation, 'assets/svg/compass_2.svg'),
         ),
         if (widget.bearing < double.maxFinite)
           Center(
-            child: getAnimatedWidget(target / pi / 2, 'assets/svg/arrow.svg'),
+            child: getAnimatedWidget(target, 'assets/svg/arrow.svg'),
           ),
       ],
     );
@@ -95,7 +118,7 @@ class _CompassState extends State<Compass> {
     return AnimatedRotation(
       turns: turns,
       curve: Curves.ease,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 300),
       child: SvgPicture.asset(image),
     );
   }
