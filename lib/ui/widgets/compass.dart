@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motion_sensors/motion_sensors.dart';
@@ -100,28 +101,40 @@ class _CompassState extends State<Compass> {
 
     // debugPrint('${widget.bearing}');
 
-    final target = newUIRotation + widget.bearing / 360;
-    // debugPrint('$newUIRotation');
+    final target = newUIRotation + (widget.bearing / 360);
+    // debugPrint('$target');
     return Stack(
       children: [
-        if (widget.bearing >= double.maxFinite) Align(alignment: Alignment.center, child: Text('Bearing ${_getRedableBearing()}')),
+        if (widget.bearing == double.maxFinite) Align(alignment: Alignment.center, child: Text('Bearing ${_getRedableBearing()}')),
         Center(
-          child: getAnimatedWidget(newUIRotation, 'assets/svg/compass_2.svg'),
+          child: getAnimatedWidget(newUIRotation, _composeCompass()),
         ),
         if (widget.bearing < double.maxFinite)
           Center(
-            child: getAnimatedWidget(target, 'assets/svg/arrow.svg'),
+            child: getAnimatedWidget(target, SvgPicture.asset('assets/svg/arrow.svg')),
           ),
       ],
     );
   }
 
-  AnimatedRotation getAnimatedWidget(double turns, String image) {
+  Widget _composeCompass() {
+    return Stack(
+      children: [
+        SvgPicture.asset('assets/svg/compass_lines.svg', color: AdaptiveTheme.of(context).theme.indicatorColor),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 19, top: 12, bottom: 16),
+          child: SvgPicture.asset('assets/svg/compass_letters.svg'),
+        ),
+      ],
+    );
+  }
+
+  AnimatedRotation getAnimatedWidget(double turns, Widget child) {
     return AnimatedRotation(
       turns: turns,
       curve: Curves.ease,
       duration: Duration(milliseconds: 300),
-      child: SvgPicture.asset(image),
+      child: child,
     );
   }
 

@@ -20,20 +20,28 @@ class CurrentLocationRow extends StatelessWidget {
         if (positionSnapshot.connectionState == ConnectionState.active && positionSnapshot.data != null) {
           // debugPrint(positionSnapshot.data.accuracy);
           final coords = '${positionSnapshot.data!.latitude.toStringAsFixed(5)}, ${positionSnapshot.data!.longitude.toStringAsFixed(5)}';
-          return _getContainer(context, coords, positionSnapshot.data?.accuracy, Colors.green.shade100);
+          return _getContainer(context, coords, positionSnapshot.data?.accuracy);
         } else {
-          return _getContainer(context, '', 0, Colors.orange.shade100);
+          return _getContainer(context, '', 0);
         }
       },
     );
   }
 
-  Widget _getContainer(BuildContext context, String coordinates, double? accuracy, Color color) {
+  Widget _getContainer(BuildContext context, String coordinates, double? accuracy) {
     final translations = CustomLocalizations.of(context);
     return InkWell(
       onTap: () {
         Clipboard.setData(ClipboardData(text: coordinates));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(translations.messages.copied)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.check),
+            SizedBox(width: 8),
+            Text(translations.messages.copied),
+          ],
+        )));
       },
       child: Card(
         elevation: 6,

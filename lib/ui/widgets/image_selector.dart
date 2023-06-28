@@ -64,10 +64,10 @@ class _ImageSelectorState extends State<ImageSelector> {
     return DottedBorder(
       borderType: BorderType.RRect,
       radius: Radius.circular(15),
-      color: Colors.grey.shade400,
+      color: Theme.of(context).disabledColor,
       child: Container(
         height: 64,
-        width: 96,
+        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -76,12 +76,12 @@ class _ImageSelectorState extends State<ImageSelector> {
           children: [
             Icon(
               Icons.add,
-              color: Colors.grey.shade400,
+              color: Theme.of(context).disabledColor,
             ),
             Text(
               translations.general.addImage,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey.shade400),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).disabledColor),
             ),
           ],
         ),

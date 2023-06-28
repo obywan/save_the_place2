@@ -36,7 +36,6 @@ class PlaceDetailsScreen extends StatelessWidget {
                   )
                 ],
               ),
-              color: Colors.green.shade200,
             ),
             DetailsTextRow(
               child: Row(
@@ -47,21 +46,10 @@ class PlaceDetailsScreen extends StatelessWidget {
                   Text('${place.location.elevation} m'),
                 ],
               ),
-              color: Colors.green.shade100,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(place.description),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Row(
-                children: [
-                  ...place.tags.map(
-                    (e) => _getTagChip(e),
-                  )
-                ],
-              ),
             ),
             _getImage(place.imagePath, context)
           ],

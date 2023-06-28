@@ -247,6 +247,7 @@ class SettingsTranslations_uk extends SettingsTranslations {
   const SettingsTranslations_uk(this._parent) : super(_parent);
   String get account => "Профіль";
   String get language => "Мова";
+  String get darkTheme => "Темна тема";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -258,6 +259,8 @@ class SettingsTranslations_uk extends SettingsTranslations {
         return account;
       case 'language':
         return language;
+      case 'darkTheme':
+        return darkTheme;
       default:
         return super[key];
     }

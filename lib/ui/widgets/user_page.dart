@@ -20,7 +20,7 @@ class UserPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: 32),
-        Text(user.displayName ?? 'unknown', style: Theme.of(context).textTheme.headline5, textAlign: TextAlign.center),
+        Text(user.displayName ?? 'unknown', style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center),
         SizedBox(height: 8),
         Text(user.email ?? '', textAlign: TextAlign.center),
         SizedBox(height: 8),

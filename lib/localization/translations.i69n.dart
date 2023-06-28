@@ -244,6 +244,7 @@ class SettingsTranslations implements i69n.I69nMessageBundle {
   const SettingsTranslations(this._parent);
   String get account => "Account";
   String get language => "Language";
+  String get darkTheme => "Dark theme";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -255,6 +256,8 @@ class SettingsTranslations implements i69n.I69nMessageBundle {
         return account;
       case 'language':
         return language;
+      case 'darkTheme':
+        return darkTheme;
       default:
         return key;
     }

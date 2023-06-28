@@ -28,9 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
         return SettingsScreen();
 
       default:
-        return Container(
-          color: Colors.amber,
-        );
+        return Container();
     }
   }
 

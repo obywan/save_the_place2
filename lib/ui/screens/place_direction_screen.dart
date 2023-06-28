@@ -5,7 +5,6 @@ import '../../data/models/place.dart';
 import '../../helpers/extension_methods.dart';
 import '../../localization/localizations.dart';
 import '../widgets/compass.dart';
-import '../widgets/details_text_row.dart';
 import '../widgets/spinny_thing.dart';
 import 'place_details_screen.dart';
 

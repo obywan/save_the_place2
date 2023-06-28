@@ -30,6 +30,7 @@ general:
 settings:
   account: Account
   language: Language
+  darkTheme: Dark theme
 newPlaceForm:
   lat: Latitude
   lon: Longitude

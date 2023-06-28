@@ -4,5 +4,4 @@ abstract class PlacesRepository {
   Future<List<Place>> getPlaces();
   Future<bool> addPlace(Place p);
   Future<bool> removePlace(Place p);
-  Set<String> getTags();
 }

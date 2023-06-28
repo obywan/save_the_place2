@@ -30,6 +30,7 @@ general:
 settings:
   account: Профіль
   language: Мова
+  darkTheme: Темна тема
 newPlaceForm:
   lat: Широта
   lon: Довгота

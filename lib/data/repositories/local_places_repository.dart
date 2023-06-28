@@ -46,12 +46,4 @@ class LocalPlacesRepository extends PlacesRepository {
       _initialLoadIsDone = true;
     }
   }
-
-  @override
-  Set<String> getTags() {
-    return places.map((e) => e.tags).fold({}, (previousValue, element) {
-      previousValue.addAll(element);
-      return previousValue;
-    });
-  }
 }

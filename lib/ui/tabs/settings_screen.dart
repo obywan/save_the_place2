@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:save_the_place/localization/localizations.dart';
 import 'package:save_the_place/localization/translations.i69n.dart';
@@ -30,6 +31,14 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           Divider(),
+          ListTile(
+              leading: Icon(Icons.brightness_4_outlined),
+              title: Text(trns.settings.darkTheme),
+              trailing: Switch(
+                  value: AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark,
+                  onChanged: (val) {
+                    AdaptiveTheme.of(context).setThemeMode(val ? AdaptiveThemeMode.dark : AdaptiveThemeMode.light);
+                  })),
         ],
       ),
     );

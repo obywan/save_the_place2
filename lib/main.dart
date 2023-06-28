@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,20 +35,29 @@ class MyApp extends StatelessWidget {
         BlocProvider<FirebaseSyncBloc>(create: (context) => FirebaseSyncBloc(lpr, fpr), lazy: false),
       ],
       child: AppBuilder(
-        builder: (context) => MaterialApp(
-          title: 'PointMe',
-          theme: ThemeData(
+        builder: (context) => AdaptiveTheme(
+          light: ThemeData(
+            brightness: Brightness.light,
             primarySwatch: Colors.blue,
           ),
-          home: TabsScreen(),
-          routes: Routes.routesTable,
-          localizationsDelegates: [
-            CustomLocalizations.delegate,
-            ...GlobalMaterialLocalizations.delegates,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: CustomLocalizations.supportedLocales,
-          locale: AppSettings.selectedLang,
+          dark: ThemeData(
+            brightness: Brightness.dark,
+            primarySwatch: Colors.blue,
+          ),
+          initial: AdaptiveThemeMode.light,
+          builder: (theme, darkTheme) => MaterialApp(
+            title: 'PointMe',
+            theme: darkTheme,
+            home: TabsScreen(),
+            routes: Routes.routesTable,
+            localizationsDelegates: [
+              CustomLocalizations.delegate,
+              ...GlobalMaterialLocalizations.delegates,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: CustomLocalizations.supportedLocales,
+            locale: AppSettings.selectedLang,
+          ),
         ),
       ),
     );
