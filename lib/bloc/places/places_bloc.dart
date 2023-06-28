@@ -17,6 +17,7 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
   PlacesBloc(this._placesRepository, this._firebasePlacesRepository) : super(PlacesInitial()) {
     on<GetPlaces>(_onGetPlaces);
     on<AddPlace>(_onAddPlace);
+    on<GetTags>(_onGetTags);
     on<RemovePlace>(_onRemovePlace);
   }
 

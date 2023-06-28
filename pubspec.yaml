@@ -37,8 +37,8 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.5
   animated_rotation: ^2.0.0
-  intl: ^0.17.0
-  flutter_launcher_icons: ^0.12.0
+  intl: ^0.18.0
+  flutter_launcher_icons: ^0.13.1
   i69n: ^2.1.0
   flutter_localizations:
     sdk: flutter
@@ -47,6 +47,7 @@ dependencies:
   google_sign_in: ^6.0.2
   cloud_firestore: ^4.5.0
   shared_preferences: ^2.0.15
+  dropdown_textfield: ^1.0.8
 
 dev_dependencies:
   flutter_test:

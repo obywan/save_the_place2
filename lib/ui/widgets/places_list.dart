@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'place_list_row.dart';
 
 import '../../bloc/places/places_bloc.dart';
 import '../../data/models/place.dart';
 import '../../localization/localizations.dart';
 import '../../localization/translations.i69n.dart';
-import '../screens/place_direction_screen.dart';
 
 class PlacesList extends StatelessWidget {
   const PlacesList({Key? key}) : super(key: key);
@@ -46,50 +46,11 @@ class PlacesList extends StatelessWidget {
     else
       return ListView.builder(
         shrinkWrap: true,
-        itemBuilder: (ctx, i) => Card(
-          child: Dismissible(
-            background: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(Icons.delete),
-                ],
-              ),
-            ),
-            key: ValueKey(places[i].location.latitude + places[i].location.longitude),
-            child: ListTile(
-              onTap: () => Navigator.of(context).pushNamed(PlaceDirectionScreen.route, arguments: places[i]),
-              title: Text(places[i].name),
-            ),
-            onDismissed: (dir) => BlocProvider.of<PlacesBloc>(context, listen: false).add(RemovePlace(places[i])),
-            confirmDismiss: (dir) async {
-              return await _confirmDelete(context);
-            },
-          ),
+        itemBuilder: (ctx, i) => PlaceListRow(
+          place: places[i],
         ),
         itemCount: places.length,
       );
-  }
-
-  Future<bool?> _confirmDelete(BuildContext context) {
-    final tr = CustomLocalizations.of(context);
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(tr.dialogs.deleteTite),
-            content: Text(tr.dialogs.areYouSureText),
-            actions: <Widget>[
-              TextButton(onPressed: () => Navigator.of(context).pop(true), child: Text(tr.dialogs.positiveAnswer)),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text(tr.dialogs.negativeAnswer),
-              ),
-            ],
-          );
-        });
   }
 
   Widget _getLoading() {

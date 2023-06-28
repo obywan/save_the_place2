@@ -100,8 +100,8 @@ class _CompassState extends State<Compass> {
 
     // debugPrint('${widget.bearing}');
 
-    final target = newUIRotation + widget.bearing / 360;
-    // debugPrint('$newUIRotation');
+    final target = newUIRotation + (widget.bearing / 360);
+    // debugPrint('$target');
     return Stack(
       children: [
         if (widget.bearing >= double.maxFinite) Align(alignment: Alignment.center, child: Text('Bearing ${_getRedableBearing()}')),

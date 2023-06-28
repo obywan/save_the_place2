@@ -70,6 +70,7 @@ class _NewLocationFormState extends State<NewLocationForm> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<PlacesBloc>(context, listen: false).add(GetTags());
     final translations = CustomLocalizations.of(context);
     return FutureBuilder<Position>(
       future: Geolocator.getCurrentPosition(),
@@ -128,7 +129,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
                       decoration: InputDecoration(hintText: translations.newPlaceForm.description),
                     ),
                     SizedBox(height: 24),
-                    TagsSelector(),
+                    TagsSelector(callback: (e) {}),
+                    SizedBox(height: 24),
                     ImageSelector(callback: _setPath),
                   ],
                 ),
@@ -142,7 +144,8 @@ class _NewLocationFormState extends State<NewLocationForm> {
                 builder: (context, state) {
                   if (state is PlacesLoading)
                     return _loading();
-                  else if (state is PlacesInitial || state is PlacesLoaded || state is PlacesError) return _initial(context, translations);
+                  else if (state is PlacesInitial || state is PlacesLoaded || state is PlacesError || state is TagsLoaded)
+                    return _initial(context, translations);
 
                   return Container();
                 },
