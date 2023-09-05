@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:motion_sensors/motion_sensors.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
+
+import '../../localization/localizations.dart';
 // import 'package:animated_rotation/animated_rotation.dart' as animR;
 
 class Compass extends StatefulWidget {
@@ -95,6 +97,7 @@ class _CompassState extends State<Compass> {
 
   @override
   Widget build(BuildContext context) {
+    final trns = CustomLocalizations.of(context);
     // debugPrint('$oldXRotation $northRotation');
 
     // final north = newUIRotation;
@@ -105,7 +108,7 @@ class _CompassState extends State<Compass> {
     // debugPrint('$target');
     return Stack(
       children: [
-        if (widget.bearing == double.maxFinite) Align(alignment: Alignment.center, child: Text('Bearing ${_getRedableBearing()}')),
+        if (widget.bearing == double.maxFinite) Align(alignment: Alignment.center, child: Text('${trns.general.bearing} ${_getRedableBearing()}')),
         Center(
           child: getAnimatedWidget(newUIRotation, _composeCompass()),
         ),

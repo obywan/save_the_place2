@@ -15,7 +15,7 @@ class ConfirmationModalSheet extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           if (descroption != null) SizedBox(height: 16),
           if (descroption != null) Text(descroption!),

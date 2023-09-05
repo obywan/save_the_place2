@@ -27,6 +27,7 @@ general:
   currentLocation: Current location
   addImage: Add image
   save: Save
+  signin: Sign in
 settings:
   account: Account
   language: Language
@@ -38,3 +39,10 @@ newPlaceForm:
   name: Name
   description: Description
   required: (required)
+userPage:
+  sync: Sync data
+  signOut: Sign out
+  dangerZone: Danger zone
+  wipeOutModalTitle: Wipe all data saved in cloud?
+  wipeOutModalDescription: This will not delete saved places from your device.\nBut data saved in cloud will be deleted permanently
+  wipeOutCloudData: Wipe delete account and cloud data

@@ -2,7 +2,7 @@ pageTitles:
   homePageTitle: Домашня сторінка
   addNewPageTitle: Додати локацію
   compassPageTitle: Компас
-  accountPageTitle: Обліковий запис
+  accountPageTitle: Профіль
   settingsPageTitle: Налаштування
 tabsTitles:
   saved: Збережені
@@ -27,6 +27,7 @@ general:
   currentLocation: Поточні координати
   addImage: Додати зображення
   save: Зберегти
+  signin: Увійти
 settings:
   account: Профіль
   language: Мова
@@ -38,3 +39,10 @@ newPlaceForm:
   name: Назва
   description: Опис
   required: (обов'язково)
+userPage:
+  sync: Синхронізувати дані
+  signOut: Вийти
+  dangerZone: Обережно
+  wipeOutModalTitle: Видалити всі дані з хмари?
+  wipeOutModalDescription: Ця дія не видалить дані з цього пристрою.\nАле дані, збережені в хмарі будуть видалені безповоротно
+  wipeOutCloudData: Видалити акаунт і дані з хмари

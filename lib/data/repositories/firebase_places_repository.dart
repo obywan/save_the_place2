@@ -68,8 +68,8 @@ class FirebasePlacesRepository extends PlacesRepository {
     }
   }
 
-  @override
-  Set<String> getTags() {
-    return {};
-  }
+  // @override
+  // Set<String> getTags() {
+  //   return {};
+  // }
 }

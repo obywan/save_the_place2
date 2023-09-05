@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../localization/localizations.dart';
+import '../../localization/translations.i69n.dart';
 import 'confirmation_modal_sheet.dart';
 
 import '../../bloc/firebase_sync/firebase_sync_bloc.dart';
@@ -45,6 +47,7 @@ class UserPage extends StatelessWidget {
   }
 
   Widget _getControls(BuildContext context, FirebaseSyncBloc fbc) {
+    Translations trns = CustomLocalizations.of(context);
     return ListView(
       shrinkWrap: true,
       children: [
@@ -53,7 +56,7 @@ class UserPage extends StatelessWidget {
           onTap: () {
             fbc.add(SyncPlaces(user));
           },
-          title: Text('Sync data'),
+          title: Text(trns.userPage.sync),
           leading: Icon(
             Icons.sync,
             color: Colors.black,
@@ -61,27 +64,28 @@ class UserPage extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-          onTap: () => showModalBottomSheet<void>(context: context, builder: (_) => ConfirmationModalSheet(title: 'Sign out?', onConfirm: signOut)),
-          title: Text('Sign out'),
+          onTap: () =>
+              showModalBottomSheet<void>(context: context, builder: (_) => ConfirmationModalSheet(title: '${trns.userPage.signOut}?', onConfirm: signOut)),
+          title: Text(trns.userPage.signOut),
           leading: Icon(
             Icons.logout_rounded,
             color: Colors.black,
           ),
         ),
         Divider(),
-        Text('Danger zone:', textAlign: TextAlign.center),
+        Text('${trns.userPage.dangerZone}:', textAlign: TextAlign.center),
         Divider(),
         ListTile(
           onTap: () => showModalBottomSheet<void>(
               context: context,
               builder: (_) => ConfirmationModalSheet(
-                  title: 'Wipe all data saved in cloud?',
-                  descroption: 'This will not delete saved places from your device.\nBut data saved in cloud will be deleted permanently.',
+                  title: trns.userPage.wipeOutModalTitle,
+                  descroption: trns.userPage.wipeOutModalDescription,
                   onConfirm: () async {
                     wipeData(fbc);
                   })),
           title: Text(
-            'Wipe data, and delete account',
+            trns.userPage.wipeOutCloudData,
             style: TextStyle(color: Colors.red),
           ),
           leading: Icon(

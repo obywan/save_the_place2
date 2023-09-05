@@ -44,6 +44,7 @@ class Translations implements i69n.I69nMessageBundle {
   GeneralTranslations get general => GeneralTranslations(this);
   SettingsTranslations get settings => SettingsTranslations(this);
   NewPlaceFormTranslations get newPlaceForm => NewPlaceFormTranslations(this);
+  UserPageTranslations get userPage => UserPageTranslations(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -67,6 +68,8 @@ class Translations implements i69n.I69nMessageBundle {
         return settings;
       case 'newPlaceForm':
         return newPlaceForm;
+      case 'userPage':
+        return userPage;
       default:
         return key;
     }
@@ -212,6 +215,7 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
   String get currentLocation => "Current location";
   String get addImage => "Add image";
   String get save => "Save";
+  String get signin => "Sign in";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -233,6 +237,8 @@ class GeneralTranslations implements i69n.I69nMessageBundle {
         return addImage;
       case 'save':
         return save;
+      case 'signin':
+        return signin;
       default:
         return key;
     }
@@ -292,6 +298,41 @@ class NewPlaceFormTranslations implements i69n.I69nMessageBundle {
         return description;
       case 'required':
         return required;
+      default:
+        return key;
+    }
+  }
+}
+
+class UserPageTranslations implements i69n.I69nMessageBundle {
+  final Translations _parent;
+  const UserPageTranslations(this._parent);
+  String get sync => "Sync data";
+  String get signOut => "Sign out";
+  String get dangerZone => "Danger zone";
+  String get wipeOutModalTitle => "Wipe all data saved in cloud?";
+  String get wipeOutModalDescription =>
+      "This will not delete saved places from your device.\nBut data saved in cloud will be deleted permanently";
+  String get wipeOutCloudData => "Wipe delete account and cloud data";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'sync':
+        return sync;
+      case 'signOut':
+        return signOut;
+      case 'dangerZone':
+        return dangerZone;
+      case 'wipeOutModalTitle':
+        return wipeOutModalTitle;
+      case 'wipeOutModalDescription':
+        return wipeOutModalDescription;
+      case 'wipeOutCloudData':
+        return wipeOutCloudData;
       default:
         return key;
     }

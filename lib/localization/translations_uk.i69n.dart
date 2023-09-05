@@ -46,6 +46,7 @@ class Translations_uk extends Translations {
   SettingsTranslations_uk get settings => SettingsTranslations_uk(this);
   NewPlaceFormTranslations_uk get newPlaceForm =>
       NewPlaceFormTranslations_uk(this);
+  UserPageTranslations_uk get userPage => UserPageTranslations_uk(this);
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -69,6 +70,8 @@ class Translations_uk extends Translations {
         return settings;
       case 'newPlaceForm':
         return newPlaceForm;
+      case 'userPage':
+        return userPage;
       default:
         return super[key];
     }
@@ -81,7 +84,7 @@ class PageTitlesTranslations_uk extends PageTitlesTranslations {
   String get homePageTitle => "Домашня сторінка";
   String get addNewPageTitle => "Додати локацію";
   String get compassPageTitle => "Компас";
-  String get accountPageTitle => "Обліковий запис";
+  String get accountPageTitle => "Профіль";
   String get settingsPageTitle => "Налаштування";
   Object operator [](String key) {
     var index = key.indexOf('.');
@@ -215,6 +218,7 @@ class GeneralTranslations_uk extends GeneralTranslations {
   String get currentLocation => "Поточні координати";
   String get addImage => "Додати зображення";
   String get save => "Зберегти";
+  String get signin => "Увійти";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -236,6 +240,8 @@ class GeneralTranslations_uk extends GeneralTranslations {
         return addImage;
       case 'save':
         return save;
+      case 'signin':
+        return signin;
       default:
         return super[key];
     }
@@ -295,6 +301,41 @@ class NewPlaceFormTranslations_uk extends NewPlaceFormTranslations {
         return description;
       case 'required':
         return required;
+      default:
+        return super[key];
+    }
+  }
+}
+
+class UserPageTranslations_uk extends UserPageTranslations {
+  final Translations_uk _parent;
+  const UserPageTranslations_uk(this._parent) : super(_parent);
+  String get sync => "Синхронізувати дані";
+  String get signOut => "Вийти";
+  String get dangerZone => "Обережно";
+  String get wipeOutModalTitle => "Видалити всі дані з хмари?";
+  String get wipeOutModalDescription =>
+      "Ця дія не видалить дані з цього пристрою.\nАле дані, збережені в хмарі будуть видалені безповоротно";
+  String get wipeOutCloudData => "Видалити акаунт і дані з хмари";
+  Object operator [](String key) {
+    var index = key.indexOf('.');
+    if (index > 0) {
+      return (this[key.substring(0, index)]
+          as i69n.I69nMessageBundle)[key.substring(index + 1)];
+    }
+    switch (key) {
+      case 'sync':
+        return sync;
+      case 'signOut':
+        return signOut;
+      case 'dangerZone':
+        return dangerZone;
+      case 'wipeOutModalTitle':
+        return wipeOutModalTitle;
+      case 'wipeOutModalDescription':
+        return wipeOutModalDescription;
+      case 'wipeOutCloudData':
+        return wipeOutCloudData;
       default:
         return super[key];
     }

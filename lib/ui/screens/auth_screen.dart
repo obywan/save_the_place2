@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../localization/localizations.dart';
 import '../widgets/spinny_thing.dart';
 
 import '../widgets/sign_in_page.dart';
@@ -17,11 +18,12 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _loading = false;
   @override
   Widget build(BuildContext context) {
+    final trns = CustomLocalizations.of(context);
     FirebaseAuth auth = FirebaseAuth.instance;
     // FirebaseSyncHelper firebaseSyncHelper = FirebaseSyncHelper(LocalPlacesRepository());
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'),
+        title: Text(trns.pageTitles.accountPageTitle),
       ),
       body: _getContent(auth),
     );
