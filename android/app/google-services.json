@@ -38,6 +38,14 @@
           }
         },
         {
+          "client_id": "418086455722-v87tu878nepdrha30phoglk5kjss33nj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.golodyukoleg.pointme",
+            "certificate_hash": "392cf5cba49374a8e668bad0d87e969d3acf2f02"
+          }
+        },
+        {
           "client_id": "418086455722-mog321b33j6lnbajn9h1dila94cbe0ll.apps.googleusercontent.com",
           "client_type": 3
         }
