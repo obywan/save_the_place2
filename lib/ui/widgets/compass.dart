@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:motion_sensors/motion_sensors.dart';
+// import 'package:motion_sensors/motion_sensors.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 import '../../localization/localizations.dart';
@@ -31,21 +33,43 @@ class _CompassState extends State<Compass> {
   double oldDeviceOrientation = double.negativeInfinity;
   double newUIRotation = 0;
 
+  Matrix4 getRotationMatrix(Vector3 gravity, Vector3 geomagnetic) {
+    Vector3 a = gravity.normalized();
+    Vector3 e = geomagnetic.normalized();
+    Vector3 h = e.cross(a).normalized();
+    Vector3 m = a.cross(h).normalized();
+    return Matrix4(
+      h.x, m.x, a.x, 0, //
+      h.y, m.y, a.y, 0,
+      h.z, m.z, a.z, 0,
+      0, 0, 0, 1,
+    );
+  }
+
+  Vector3 getOrientation(Matrix4 m) {
+    final r = m.storage;
+    return Vector3(
+      math.atan2(-r[4], r[5]),
+      math.asin(r[6]),
+      math.atan2(-r[2], r[10]),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
 
-    subscriptions.add(motionSensors.accelerometer.listen((AccelerometerEvent event) {
+    subscriptions.add(Sensors().accelerometerEventStream().listen((AccelerometerEvent event) {
       setState(() {
         _accelerometer.setValues(event.x, event.y, event.z);
       });
     }));
 
-    subscriptions.add(motionSensors.magnetometer.listen((MagnetometerEvent event) {
+    subscriptions.add(Sensors().magnetometerEventStream().listen((MagnetometerEvent event) {
       setState(() {
         _magnetometer.setValues(event.x, event.y, event.z);
-        var matrix = motionSensors.getRotationMatrix(_accelerometer, _magnetometer);
-        _absoluteOrientation2.setFrom(motionSensors.getOrientation(matrix));
+        var matrix = getRotationMatrix(_accelerometer, _magnetometer);
+        _absoluteOrientation2.setFrom(getOrientation(matrix));
 
         //get normalized rotation (0-1 ragne)
         final preprocessedRotation = (_absoluteOrientation2.x > 0 ? _absoluteOrientation2.x : Compass.twoPI + _absoluteOrientation2.x) / Compass.twoPI;
