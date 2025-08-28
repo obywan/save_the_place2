@@ -62,9 +62,11 @@ class _ImageSelectorState extends State<ImageSelector> {
   Widget _placeholder(BuildContext context) {
     final translations = CustomLocalizations.of(context);
     return DottedBorder(
-      borderType: BorderType.RRect,
-      radius: Radius.circular(15),
-      color: Theme.of(context).disabledColor,
+      options: RectDottedBorderOptions(
+        color: Theme.of(context).disabledColor,
+        strokeWidth: 2,
+        dashPattern: [6, 3],
+      ),
       child: Container(
         height: 64,
         width: double.infinity,

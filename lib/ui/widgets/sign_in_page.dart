@@ -19,8 +19,9 @@ class SignInPage extends StatelessWidget {
 
   Future<void> signInWithGoogle() async {
     setStateCallback(true);
+    await GoogleSignIn.instance.initialize();
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
     if (googleUser == null) {
       setStateCallback(false);
       return null;
@@ -36,7 +37,6 @@ class SignInPage extends StatelessWidget {
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 

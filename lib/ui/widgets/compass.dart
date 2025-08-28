@@ -174,6 +174,7 @@ class _CompassState extends State<Compass> {
 
   String _getRedableBearing() {
     final number = _absoluteOrientation2.x * 180 / pi;
-    return (number >= 0 ? number : 360 + number).toStringAsFixed(0);
+    // final clampedNumber = number >= 0 ? number : 360 + number;
+    return (360 - (number >= 0 ? number : 360 + number)).toStringAsFixed(0);
   }
 }
